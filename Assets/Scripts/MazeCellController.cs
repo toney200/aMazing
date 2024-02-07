@@ -1,18 +1,30 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeCellController : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
-    {
-        
-    }
+    [SerializeField]
+    private GameObject leftWall;
 
-    // Update is called once per frame
-    void Update()
+    [SerializeField]
+    private GameObject rightWall;
+
+    [SerializeField]
+    private GameObject frontWall;
+
+    [SerializeField]
+    private GameObject backWall;
+
+    [SerializeField]
+    private GameObject unvisitedBlock;
+
+    public Boolean isVisited { get; private set; };
+
+    public void Visit()
     {
-        
+        isVisited = true;
+        unvisitedBlock.SetActive(false);
     }
 }
