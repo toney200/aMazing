@@ -149,21 +149,22 @@ public class MazeGenerator : MonoBehaviour
 
     private IEnumerator StartAtRandomEdgeCell()
     {
-        int randomNumber = (int)Random.Range(1.0f, 2.0f);
+        int randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
         int xStartPoint, yStartPoint;
 
         switch (randomNumber)
         {
             case 1:
-                randomNumber = (int)Random.Range(1.0f, 2.0f);
+                randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
                 xStartPoint = randomNumber % 2 == 0 ? 0 : mazeWidth - 1;
-                yStartPoint = (int)Random.Range(0.0f, (mazeDepth - 1));
+                yStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeDepth - 1)));
 
                 yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
                 break;
             case 2:
+                randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
                 yStartPoint = randomNumber % 2 == 0 ? 0 : mazeDepth - 1;
-                xStartPoint = (int)Random.Range(0.0f, (mazeWidth - 1));
+                xStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeWidth - 1)));
 
                 yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
                 break;
