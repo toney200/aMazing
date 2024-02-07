@@ -20,11 +20,31 @@ public class MazeCellController : MonoBehaviour
     [SerializeField]
     private GameObject unvisitedBlock;
 
-    public Boolean isVisited { get; private set; };
+    public bool isVisited { get; private set; }
 
     public void Visit()
     {
         isVisited = true;
         unvisitedBlock.SetActive(false);
+    }
+
+    public void ClearLeftWall()
+    {
+        leftWall.SetActive(false);
+    }
+
+    public void ClearRightWall()
+    {
+        rightWall.SetActive(false);
+    }
+
+    public void ClearFrontWall()
+    {
+        frontWall.SetActive(false);
+    }
+
+    public void ClearBackWall()
+    {
+        backWall.SetActive(false);
     }
 }
