@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
+using System.Runtime.InteropServices.WindowsRuntime;
 
 public class MazeGenerator : MonoBehaviour
 {
@@ -29,7 +30,7 @@ public class MazeGenerator : MonoBehaviour
             }
         }
 
-        yield return GenerateMaze(null, mazeGrid[0, 0]);
+        yield return StartAtRandomEdgeCell();
     }
 
     private IEnumerator GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -143,6 +144,31 @@ public class MazeGenerator : MonoBehaviour
             currentCell.ClearFrontWall();
             previousCell.ClearBackWall();
             return;
+        }
+    }
+
+    private IEnumerator StartAtRandomEdgeCell()
+    {
+        int randomNumber = (int)Random.Range(1.0f, 2.0f);
+        int xStartPoint, yStartPoint;
+
+        switch (randomNumber)
+        {
+            case 1:
+                randomNumber = (int)Random.Range(1.0f, 2.0f);
+                xStartPoint = randomNumber % 2 == 0 ? 0 : mazeWidth - 1;
+                yStartPoint = (int)Random.Range(0.0f, (mazeDepth - 1));
+
+                yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                break;
+            case 2:
+                yStartPoint = randomNumber % 2 == 0 ? 0 : mazeDepth - 1;
+                xStartPoint = (int)Random.Range(0.0f, (mazeWidth - 1));
+
+                yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                break;
+            default:
+                break;
         }
     }
 }
