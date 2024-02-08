@@ -123,106 +123,6 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
---- !u!1001 &665621102
-PrefabInstance:
-  m_ObjectHideFlags: 0
-  serializedVersion: 2
-  m_Modification:
-    serializedVersion: 3
-    m_TransformParent: {fileID: 0}
-    m_Modifications:
-    - target: {fileID: 5116486827631594942, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 0.325
-      objectReference: {fileID: 0}
-    - target: {fileID: 5116486827631594942, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0.612
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalPosition.x
-      value: 3.6199622
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalPosition.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalPosition.z
-      value: 0.40872717
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalRotation.w
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalRotation.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalRotation.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalRotation.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 5977937850668086848, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 6466665909030137082, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      propertyPath: m_Name
-      value: Stickman Hero Blue
-      objectReference: {fileID: 0}
-    m_RemovedComponents: []
-    m_RemovedGameObjects: []
-    m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 6466665909030137082, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 665621104}
-  m_SourcePrefab: {fileID: 100100000, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
---- !u!1 &665621103 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 6466665909030137082, guid: 4e326f068518c9c4b88f4da310cf8cba, type: 3}
-  m_PrefabInstance: {fileID: 665621102}
-  m_PrefabAsset: {fileID: 0}
---- !u!54 &665621104
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 665621103}
-  serializedVersion: 4
-  m_Mass: 1
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 0
-  m_CollisionDetection: 0
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -402,17 +302,95 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 963194225}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 1, z: -10}
+  m_LocalRotation: {x: -0.0047274614, y: 0.9828509, z: -0.18391773, w: -0.012491185}
+  m_LocalPosition: {x: 4.853, y: 6.304, z: 6.511}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: 21.201, y: 181.402, z: -0.289}
+--- !u!1 &6466665908469382804 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+  m_PrefabInstance: {fileID: 6792830352257384504}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &6466665908469382805
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6466665908469382804}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: af5ea78d8a598e54a8cc6c6f36fe60be, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!1001 &6792830352257384504
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 3.58
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0.7
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -5.01
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 842968953231099973, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: m_Name
+      value: Stickman Hero Blue
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 5122879286441128151, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 6466665908469382805}
+  m_SourcePrefab: {fileID: 100100000, guid: 006621621407e2d43931d0102839bdc2, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 963194228}
   - {fileID: 705507995}
-  - {fileID: 665621102}
+  - {fileID: 963194228}
+  - {fileID: 6792830352257384504}
