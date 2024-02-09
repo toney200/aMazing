@@ -33,7 +33,6 @@ public class MazeGeneratorInstant : MonoBehaviour
             }
         }
         StartAtRandomEdgeCell();
-        GameObject p = Instantiate(player, new Vector3(0, 0.35f, 0), Quaternion.identity);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -170,7 +169,11 @@ public class MazeGeneratorInstant : MonoBehaviour
                 GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
                 break;
             default:
+                xStartPoint = 0;
+                yStartPoint = 0;
                 break;
         }
+
+        Instantiate(player, new Vector3((float)xStartPoint, 0.35f, (float)yStartPoint), Quaternion.identity);
     }
 }
