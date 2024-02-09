@@ -13,6 +13,8 @@ public class PlayerMovement : MonoBehaviour
     bool movementPressed;
     int isRunningHash;
 
+    public float speed = 1;
+
     void Awake()
     {
         input = new PlayerInput();
@@ -72,6 +74,15 @@ public class PlayerMovement : MonoBehaviour
         {
             animator.SetBool(isRunningHash, false);
         }
+
+        //calculate Movement 
+        Vector3 movementDirection = new Vector3(currentmovement.x, 0, currentmovement.y);
+
+        //Apply speed to the movement
+        Vector3 movement = movementDirection * speed * Time.deltaTime;
+
+        // Move the Player
+        transform.position += movement;
 
     }
 
