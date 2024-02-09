@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-public class MazeGenerator : MonoBehaviour
+public class MazeGeneratorInstant : MonoBehaviour
 {
     [SerializeField]
     private MazeCell mazeCellPrefab;
@@ -15,30 +15,31 @@ public class MazeGenerator : MonoBehaviour
     [SerializeField]
     private int mazeDepth;
 
-    private MazeCell[,]  mazeGrid;
+    private MazeCell[,] mazeGrid;
+
+    [SerializeField]
+    private GameObject player;
 
     // Start is called before the first frame update
-    IEnumerator Start()
+    void Start()
     {
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
 
-        for(int i = 0; i < mazeWidth; i++)
+        for (int i = 0; i < mazeWidth; i++)
         {
-            for(int j = 0;  j < mazeDepth; j++)
+            for (int j = 0; j < mazeDepth; j++)
             {
                 mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
             }
         }
-
-        yield return StartAtRandomEdgeCell();
+        StartAtRandomEdgeCell();
+        GameObject p = Instantiate(player, new Vector3(0, 0.35f, 0), Quaternion.identity);
     }
 
-    private IEnumerator GenerateMaze(MazeCell previousCell, MazeCell currentCell)
+    private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
     {
         currentCell.Visit();
         ClearWalls(previousCell, currentCell);
-
-        yield return new WaitForSeconds(0.025f);
 
         MazeCell nextCell;
 
@@ -48,9 +49,9 @@ public class MazeGenerator : MonoBehaviour
 
             if (nextCell != null)
             {
-                yield return GenerateMaze(currentCell, nextCell);
+                GenerateMaze(currentCell, nextCell);
             }
-        }while(nextCell != null);
+        } while (nextCell != null);
     }
 
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
@@ -66,10 +67,10 @@ public class MazeGenerator : MonoBehaviour
         int z = (int)currentCell.transform.position.z;
 
         //Check the cell to the right
-        if(x + 1 < mazeWidth)
+        if (x + 1 < mazeWidth)
         {
             var rightCell = mazeGrid[x + 1, z];
-            if(rightCell.isVisited == false)
+            if (rightCell.isVisited == false)
             {
                 yield return rightCell;
             }
@@ -109,13 +110,13 @@ public class MazeGenerator : MonoBehaviour
     private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
         //When we start, previous cell doesn't exist
-        if(previousCell == null)
+        if (previousCell == null)
         {
             return;
         }
 
         //If the previous cell is on the left, clear current left wall and previous right wall
-        if(previousCell.transform.position.x < currentCell.transform.position.x)
+        if (previousCell.transform.position.x < currentCell.transform.position.x)
         {
             currentCell.ClearLeftWall();
             previousCell.ClearRightWall();
@@ -147,7 +148,7 @@ public class MazeGenerator : MonoBehaviour
         }
     }
 
-    private IEnumerator StartAtRandomEdgeCell()
+    private void StartAtRandomEdgeCell()
     {
         int randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
         int xStartPoint, yStartPoint;
@@ -159,14 +160,14 @@ public class MazeGenerator : MonoBehaviour
                 xStartPoint = randomNumber % 2 == 0 ? 0 : mazeWidth - 1;
                 yStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeDepth - 1)));
 
-                yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
                 break;
             case 2:
                 randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
                 yStartPoint = randomNumber % 2 == 0 ? 0 : mazeDepth - 1;
                 xStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeWidth - 1)));
 
-                yield return GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
                 break;
             default:
                 break;

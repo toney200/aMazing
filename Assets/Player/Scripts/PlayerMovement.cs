@@ -7,7 +7,7 @@ public class PlayerMovement : MonoBehaviour
 {
     Animator animator;
     PlayerInput input;
-    Vector2 currentmovement;
+    Vector3 currentmovement;
 
     
     bool movementPressed;
