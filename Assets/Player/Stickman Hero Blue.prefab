@@ -1592,6 +1592,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5ea78d8a598e54a8cc6c6f36fe60be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  speed: 2
 --- !u!111 &1530416604181923307
 Animation:
   m_ObjectHideFlags: 0
@@ -1647,10 +1648,10 @@ CapsuleCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 2
-  m_Radius: 0.29346025
-  m_Height: 1.8864117
+  m_Radius: 0.34988022
+  m_Height: 1.8864115
   m_Direction: 1
-  m_Center: {x: 0.33206534, y: 1.4972534, z: -0.049288154}
+  m_Center: {x: 0.33206534, y: 1.4972534, z: -0.010116577}
 --- !u!1 &7204009026325358369
 GameObject:
   m_ObjectHideFlags: 0
