@@ -22,6 +22,9 @@ public class MazeCell : MonoBehaviour
 
     public bool isVisited { get; private set; }
 
+    /// <summary>
+    /// Disables the unvisited block to visually show a cell that has been visited
+    /// </summary>
     public void Visit()
     {
         isVisited = true;

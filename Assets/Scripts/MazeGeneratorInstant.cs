@@ -53,6 +53,11 @@ public class MazeGeneratorInstant : MonoBehaviour
         } while (nextCell != null);
     }
 
+    /// <summary>
+    /// Randomly chooses an unvisited neighbouring cell
+    /// </summary>
+    /// <param name="currentCell"></param>
+    /// <returns></returns>
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
     {
         var unvisitedCells = GetUnvisitedCells(currentCell);
@@ -60,6 +65,11 @@ public class MazeGeneratorInstant : MonoBehaviour
         return unvisitedCells.OrderBy(_ => Random.Range(1, 10)).FirstOrDefault();
     }
 
+    /// <summary>
+    /// Returns all neighbouring cells that have not yet been visited.
+    /// </summary>
+    /// <param name="currentCell"></param>
+    /// <returns></returns>
     private IEnumerable<MazeCell> GetUnvisitedCells(MazeCell currentCell)
     {
         int x = (int)currentCell.transform.position.x;
@@ -106,6 +116,11 @@ public class MazeGeneratorInstant : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Clears the walls of the two cells passed in order to connect them.
+    /// </summary>
+    /// <param name="previousCell"></param>
+    /// <param name="currentCell"></param>
     private void ClearWalls(MazeCell previousCell, MazeCell currentCell)
     {
         //When we start, previous cell doesn't exist
@@ -147,33 +162,148 @@ public class MazeGeneratorInstant : MonoBehaviour
         }
     }
 
+    /// <summary>
+    /// Chooses a random cell at one of the edges of the maze as a starting point for generating the maze.
+    /// Players are also spawned in the maze relative to the chosen cell.
+    /// </summary>
     private void StartAtRandomEdgeCell()
     {
-        int randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
-        int xStartPoint, yStartPoint;
+        int edgeChooser = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
+        int xStartPoint, zStartPoint;
 
-        switch (randomNumber)
+        switch (edgeChooser)
         {
             case 1:
-                randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
-                xStartPoint = randomNumber % 2 == 0 ? 0 : mazeWidth - 1;
-                yStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeDepth - 1)));
+                edgeChooser = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
+                xStartPoint = edgeChooser % 2 == 0 ? 0 : mazeWidth - 1;
+                zStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeDepth - 1)));
 
-                GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                GenerateMaze(null, mazeGrid[xStartPoint, zStartPoint]);
                 break;
             case 2:
-                randomNumber = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
-                yStartPoint = randomNumber % 2 == 0 ? 0 : mazeDepth - 1;
+                edgeChooser = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
+                zStartPoint = edgeChooser % 2 == 0 ? 0 : mazeDepth - 1;
                 xStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeWidth - 1)));
 
-                GenerateMaze(null, mazeGrid[xStartPoint, yStartPoint]);
+                GenerateMaze(null, mazeGrid[xStartPoint, zStartPoint]);
                 break;
             default:
                 xStartPoint = 0;
-                yStartPoint = 0;
+                zStartPoint = 0;
                 break;
         }
 
-        Instantiate(player, new Vector3((float)xStartPoint, 0.35f, (float)yStartPoint), Quaternion.identity);
+        SpawnPlayers(xStartPoint, zStartPoint);
+    }
+
+    private void SpawnPlayers(int xStart,  int zStart)
+    {
+        int edge = CheckEdge(xStart, zStart);
+        int distance = GetDistance(xStart, zStart, edge);
+
+        for (int i = 0; i < 3; i++)
+        {
+            if(i == 0)
+            {
+                Instantiate(player, new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity);
+                if(edge == 3)
+                {
+                    edge = 0;
+                }
+                else
+                {
+                    edge++;
+                }
+            }
+            else
+            {
+                switch (edge)
+                {
+                    //Front edge case
+                    case 0:
+                        Instantiate(player, new Vector3((float)distance, 0.35f, 0), Quaternion.identity);
+                        edge++;
+                        break;
+                    //Left edge case
+                    case 1:
+                        Instantiate(player, new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity);
+                        edge++;
+                        break;
+                    //Back edge case
+                    case 2:
+                        Instantiate(player, new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity);
+                        edge++;
+                        break;
+                    //Right edge case
+                    case 3:
+                        Instantiate(player, new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity);
+                        edge = 0;
+                        break;
+                    //Failure
+                    default:
+                        Debug.Log("Error in calculation");
+                        break;
+                }
+            }
+        }
+    }
+
+    /// <summary>
+    /// Checks which edge the cell with the given coordinates is on.
+    /// </summary>
+    /// <param name="x"></param>
+    /// <param name="z"></param>
+    /// <returns>Returns an integer representing an edge.</returns>
+    private int CheckEdge(int x, int z)
+    {
+        //Checks if it's the front edge, denoted by 0
+        if((x >= 0 && x <= mazeWidth - 2) && z == 0)
+        {
+            return 0;
+        }
+        //Checks if it's the left edge, denoted by 1
+        if ((z >= 0 && z <= mazeDepth - 2) && x == mazeWidth - 1)
+        {
+            return 1;
+        }
+        //Checks if it's the back edge, denoted by 2
+        if ((x >= 1 && x <= mazeWidth - 1) && z == mazeDepth - 1)
+        {
+            return 2;
+        }
+        //Checks if it's the right edge, denoted by 3
+        if ((z >= 1 && z <= mazeDepth - 1) && x == 0)
+        {
+            return 3;
+        }
+
+        //-1 indicates a failure, it should never come to this
+        return -1;
+    }
+
+    /// <summary>
+    /// Checks how far the beginning maze cell is from the origin of the edge it is a part of.
+    /// Front origin (0, 0), Left origin (mazeWidth - 1, 0), Back origin (mazeWidth - 1, mazeDepth - 1), Right origin (0, mazeDepth - 1)
+    /// </summary>
+    /// <param name="xLocation"></param>
+    /// <param name="zLocation"></param>
+    /// <param name="edgeNumber"></param>
+    /// <returns>The distance from the edge's origin</returns>
+    private int GetDistance(int xLocation, int zLocation, int edgeNumber)
+    {
+        switch (edgeNumber)
+        {
+            case 0:
+                return xLocation;
+            case 1:
+                return zLocation;
+            case 2:
+                return (mazeWidth - 1) - xLocation;
+            case 3:
+                return (mazeDepth - 1) - zLocation;
+            default:
+                Debug.Log("Cannot get edge distance");
+                return -1;
+        }
     }
 }
