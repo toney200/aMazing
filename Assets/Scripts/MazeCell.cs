@@ -50,4 +50,15 @@ public class MazeCell : MonoBehaviour
     {
         backWall.SetActive(false);
     }
+
+    public void ActivateWalls()
+    {
+        leftWall.SetActive(true);
+        rightWall.SetActive(true);
+        frontWall.SetActive(true);
+        backWall.SetActive(true);
+
+        isVisited = false;
+        unvisitedBlock.SetActive(true);
+    }
 }

@@ -167,7 +167,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 5524fa3d4190aa04a814150ab23ab155, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  mazeCellPrefab: {fileID: 1009996665588551393, guid: eee840f6355a20941abe6187b4ca23f7, type: 3}
+  mazeCellPrefab: {fileID: 1009996665588551393, guid: a0d00097950248d4c949a04ee2de08bc, type: 3}
+  mazeGoalPrefab: {fileID: 1009996665588551393, guid: eee840f6355a20941abe6187b4ca23f7, type: 3}
   mazeWidth: 20
   mazeDepth: 20
   player: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}

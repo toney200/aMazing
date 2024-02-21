@@ -10,6 +10,9 @@ public class MazeGeneratorInstant : MonoBehaviour
     private MazeCell mazeCellPrefab;
 
     [SerializeField]
+    public MazeCell mazeGoalPrefab;
+
+    [SerializeField]
     private int mazeWidth;
 
     [SerializeField]
@@ -29,10 +32,23 @@ public class MazeGeneratorInstant : MonoBehaviour
         {
             for (int j = 0; j < mazeDepth; j++)
             {
-                mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                //If the cell is in the middle of the maze, generate an instance of the maze goal prefab
+                //This condition is hardcoded for a maze of equal dimensions and there are more than 1 cells in the maze
+                if((i == ((mazeWidth - 1) / 2) && j == ((mazeDepth - 1) / 2)) || //Top Left
+                    (i == ((mazeWidth - 1) / 2) + 1 && j == ((mazeDepth - 1) / 2)) || //Top Right
+                    (i == ((mazeWidth - 1) / 2) && j == ((mazeDepth - 1) / 2) + 1) || //Bottom Left
+                    (i == ((mazeWidth - 1) / 2) + 1 && j == ((mazeDepth - 1) / 2) + 1)) // Bottom Right
+                {
+                    mazeGrid[i, j] = Instantiate(mazeGoalPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                }
+                else //Otherwise, generate a regular maze cell
+                {
+                    mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                }
+                
             }
         }
-        StartAtRandomEdgeCell();
+        StartAtRandomEdgeCell(true);
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -166,7 +182,8 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// Chooses a random cell at one of the edges of the maze as a starting point for generating the maze.
     /// Players are also spawned in the maze relative to the chosen cell.
     /// </summary>
-    private void StartAtRandomEdgeCell()
+    /// <param name="isFirstRound"></param>
+    private void StartAtRandomEdgeCell(bool isFirstRound)
     {
         int edgeChooser = Mathf.RoundToInt(Random.Range(1.0f, 2.0f));
         int xStartPoint, zStartPoint;
@@ -193,7 +210,10 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
-        SpawnPlayers(xStartPoint, zStartPoint);
+        if(isFirstRound)
+        {
+            SpawnPlayers(xStartPoint, zStartPoint);  //DO NOT PUT IN Start(), coordinates from this method are needed
+        }
     }
 
     private void SpawnPlayers(int xStart,  int zStart)
@@ -305,5 +325,18 @@ public class MazeGeneratorInstant : MonoBehaviour
                 Debug.Log("Cannot get edge distance");
                 return -1;
         }
+    }
+
+    /// <summary>
+    /// Starts a new round when called
+    /// </summary>
+    public void NewRound()
+    {
+        foreach(MazeCell mc in mazeGrid)
+        {
+            mc.ActivateWalls();
+        }
+
+        StartAtRandomEdgeCell(false);
     }
 }
