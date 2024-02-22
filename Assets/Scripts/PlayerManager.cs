@@ -5,6 +5,7 @@ using UnityEngine;
 
 public class PlayerManager : MonoBehaviour
 {
+    private Rigidbody rb;
     private PlayerMovement playerMovement;
     [SerializeField] private Collider playerCollider;
     
@@ -14,17 +15,17 @@ public class PlayerManager : MonoBehaviour
     private bool isGhosting = false;
     private float ghostingDuration = 3f;
 
-    // Speed boost variables
+    // Speed-boost-specific variables
     private bool speedBoosting = false;
     private float speedBoostDuration = 5f;
     private float boostTimer = 0;
 
     // Start is called before the first frame update
-    IEnumerator Start(){
+    void Start(){
+        rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
-        //playerCollider = GetComponent<Collider>();
 
-        yield return EnablePowerUp();
+        InvokeRepeating("EnablePowerUp", 5, 20);
     }
 
     // Update is called once per frame
@@ -33,18 +34,11 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
-        /*
-        if (other.CompareTag("Speed Boost")){
-            speedBoosting = true;
-            SpeedBoosting();
-        }
 
-        if (other.CompareTag("Ghost")){
-            isGhosting = true;
-        }
-        */
+    }
 
-
+    private void OnCollisionEnter(Collision collision){
+        
     }
 
     private IEnumerator EnablePowerUp(){
@@ -69,19 +63,14 @@ public class PlayerManager : MonoBehaviour
         
     }
     
-    private void SpeedBoosting(){
+    private IEnumerator SpeedBoosting(){
+        Debug.Log("Speed boosted active");  // yes, I'm aware debug.log is a shit way of debugging. Leave me alone
         if (speedBoosting){
-            boostTimer += Time.deltaTime;
             playerMovement.speed *= 2;
-            if (boostTimer > speedBoostDuration){
-                playerMovement.speed /= 2;
-                speedBoosting = false;
-            }
+            yield return new WaitForSeconds(speedBoostDuration);
+            playerMovement.speed /= 2;
         }
-
-        Debug.Log("Speeding");
-
-        EnablePowerUp();
+    
     }
     
 
@@ -97,7 +86,7 @@ public class PlayerManager : MonoBehaviour
 
         yield return new WaitForSeconds(ghostingDuration);
         isGhosting = false;
-        EnablePowerUp();
+       
     }
 
 }
