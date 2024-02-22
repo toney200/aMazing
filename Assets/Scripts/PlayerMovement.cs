@@ -6,7 +6,7 @@ using UnityEngine.InputSystem;
 public class PlayerMovement : MonoBehaviour
 {
     Animator animator;
-    PlayerInput input;
+    PlayerHandler input;
     Vector2 currentmovement;
 
     
@@ -14,10 +14,11 @@ public class PlayerMovement : MonoBehaviour
     int isRunningHash;
 
     public float speed = 1;
+    
 
     void Awake()
     {
-        input = new PlayerInput();
+        input = new PlayerHandler();
 
         //Set player input values using listeners.
         input.CharacterControls.Movement.performed += ctx =>
@@ -98,4 +99,5 @@ public class PlayerMovement : MonoBehaviour
         input.CharacterControls.Disable();
     }
 
+    public void OnMove(InputAction.CallbackContext ctx) => currentmovement = ctx.ReadValue<Vector2>();
 }
