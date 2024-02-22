@@ -52,5 +52,6 @@
         "temp/":true,
         "Temp/":true
     },
-    "dotnet.defaultSolution": "Games-Fleadh.sln"
+    "dotnet.defaultSolution": "Games-Fleadh.sln",
+    "dotnet.preferCSharpExtension": true
 }
