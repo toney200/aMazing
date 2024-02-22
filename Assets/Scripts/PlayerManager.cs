@@ -27,6 +27,7 @@ public class PlayerManager : MonoBehaviour
     }
 
     private void OnTriggerEnter(Collider other){
+        /*
         if (other.CompareTag("Speed Boost")){
             speedBoosting = true;
             SpeedBoosting();
@@ -35,6 +36,9 @@ public class PlayerManager : MonoBehaviour
         if (other.CompareTag("Ghost")){
             isGhosting = true;
         }
+        */
+
+
     }
 
     private void SpeedBoosting(){
