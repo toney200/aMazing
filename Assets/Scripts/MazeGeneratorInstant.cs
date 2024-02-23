@@ -56,6 +56,14 @@ public class MazeGeneratorInstant : MonoBehaviour
         }
         StartAtRandomEdgeCell(true);
     }
+    void Update()
+    {
+        if (Input.GetKeyDown(KeyCode.Space))
+        {
+            MovePlayersToWaitPoint();
+            NewRound();
+        }
+    }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
     {
@@ -83,7 +91,6 @@ public class MazeGeneratorInstant : MonoBehaviour
     private MazeCell GetNextUnvisitedCell(MazeCell currentCell)
     {
         var unvisitedCells = GetUnvisitedCells(currentCell);
-
         return unvisitedCells.OrderBy(_ => Random.Range(1, 10)).FirstOrDefault();
     }
 
@@ -220,14 +227,23 @@ public class MazeGeneratorInstant : MonoBehaviour
         {
             SpawnPlayers(xStartPoint, zStartPoint);  //DO NOT PUT IN Start(), coordinates from this method are needed
         }
+        else
+        {
+            NewPlayerSpawnPoints(xStartPoint, zStartPoint);
+        }
     }
 
+    /// <summary>
+    /// Spawns players at the start of the game
+    /// </summary>
+    /// <param name="xStart"></param>
+    /// <param name="zStart"></param>
     private void SpawnPlayers(int xStart,  int zStart)
     {
         int edge = CheckEdge(xStart, zStart);
         int distance = GetDistance(xStart, zStart, edge);
 
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             if(i == 0)
             {
@@ -346,18 +362,21 @@ public class MazeGeneratorInstant : MonoBehaviour
         StartAtRandomEdgeCell(false);
     }
 
-    private void RepositionPlayers(int xStart, int zStart)
+    /// <summary>
+    /// Generates new spawn points for players without the need to delete and instantiate new players
+    /// </summary>
+    /// <param name="xStart"></param>
+    /// <param name="zStart"></param>
+    private void NewPlayerSpawnPoints(int xStart, int zStart)
     {
         int edge = CheckEdge(xStart, zStart);
         int distance = GetDistance(xStart, zStart, edge);
 
-        MovePlayersToWaitPoint(numberOfPlayers);
-
-        for (int i = 0; i < 3; i++)
+        for (int i = 0; i < numberOfPlayers; i++)
         {
             if (i == 0)
             {
-                Instantiate(player, new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity, playersParent.transform);
+                playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3((float)xStart, 0.35f, (float)zStart);
                 if (edge == 3)
                 {
                     edge = 0;
@@ -373,22 +392,22 @@ public class MazeGeneratorInstant : MonoBehaviour
                 {
                     //Front edge case
                     case 0:
-                        Instantiate(player, new Vector3((float)distance, 0.35f, 0), Quaternion.identity, playersParent.transform);
+                        playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3((float)distance, 0.35f, 0);
                         edge++;
                         break;
                     //Left edge case
                     case 1:
-                        Instantiate(player, new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity, playersParent.transform);
+                        playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance);
                         edge++;
                         break;
                     //Back edge case
                     case 2:
-                        Instantiate(player, new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity, playersParent.transform);
+                        playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1));
                         edge++;
                         break;
                     //Right edge case
                     case 3:
-                        Instantiate(player, new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity, playersParent.transform);
+                        playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance));
                         edge = 0;
                         break;
                     //Failure
@@ -400,9 +419,12 @@ public class MazeGeneratorInstant : MonoBehaviour
         }
     }
 
-    private void MovePlayersToWaitPoint(int playersNumber)
+    /// <summary>
+    /// Moves all players outside the camera
+    /// </summary>
+    private void MovePlayersToWaitPoint()
     {
-        for(int i = 0; i < playersNumber; i++)
+        for(int i = 0; i < numberOfPlayers; i++)
         {
             playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3(0.0f, 0.0f, -100.0f);
         }
