@@ -7,25 +7,32 @@ public class PlayerManager : MonoBehaviour
 {
     private Rigidbody rb;
     private PlayerMovement playerMovement;
+    
+    [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
     
+    private String[] powers = { "speed", "ghosting", "invisibility" };
+
     // Ghosting-specific variables
     [SerializeField] private GameObject[] walls = {};
-    private String[] powers = {"speed", "ghost"};
     private bool isGhosting = false;
     private float ghostingDuration = 3f;
 
-    // Speed-boost-specific variables
+    // Speed-boost  variables
     private bool speedBoosting = false;
     private float speedBoostDuration = 5f;
     private float boostTimer = 0;
+
+    // Self-invis variables
+    private bool isInvisible = false;
+    private float invisDuration = 6f;
 
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
 
-        InvokeRepeating("EnablePowerUp", 5, 20);
+        InvokeRepeating("EnablePowerUp", 5f, 20f);
     }
 
     // Update is called once per frame
@@ -56,6 +63,11 @@ public class PlayerManager : MonoBehaviour
                 Ghosting();
                 break;
 
+            case 2:
+                isInvisible = true;
+                SelfInvisibility();
+                break;
+
             default:
                 Debug.Log("powerSelect drew a value not present in the powers array");
                 break;
@@ -70,6 +82,7 @@ public class PlayerManager : MonoBehaviour
             yield return new WaitForSeconds(speedBoostDuration);
             playerMovement.speed /= 2;
         }
+        speedBoosting = false;
     
     }
     
@@ -89,4 +102,12 @@ public class PlayerManager : MonoBehaviour
        
     }
 
+    private IEnumerator SelfInvisibility()
+    {
+        if (isInvisible){
+            bodyMeshRenderer.enabled = false;
+            yield return new WaitForSeconds(invisDuration);
+            bodyMeshRenderer.enabled = true;
+        }
+    }
 }
