@@ -2,16 +2,20 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
     private Rigidbody rb;
-    private PlayerMovement playerMovement;
+    private PlayerMovement playerMovement; 
     
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
-    
+    [SerializeField] private PlayerInput playerInput;
+
     private String[] powers = { "speed", "ghosting", "invisibility" };
+
+    private bool hasPowerUp = false;
 
     // Ghosting-specific variables
     [SerializeField] private GameObject[] walls = {};
@@ -54,18 +58,27 @@ public class PlayerManager : MonoBehaviour
         switch (powerSelect)
         {
             case 0:
-                speedBoosting = true;
-                SpeedBoosting();
+                if (hasPowerUp == false)
+                {
+                    speedBoosting = true;
+                    //SpeedBoosting();
+                }
                 break;
 
             case 1:
-                isGhosting = true;
-                Ghosting();
+                if (hasPowerUp == false)
+                {
+                    isGhosting = true;
+                    //Ghosting();
+                }
                 break;
 
             case 2:
-                isInvisible = true;
-                SelfInvisibility();
+                if (hasPowerUp == false)
+                {
+                    isInvisible = true;
+                    //SelfInvisibility();
+                }
                 break;
 
             default:
@@ -76,38 +89,38 @@ public class PlayerManager : MonoBehaviour
     }
     
     private IEnumerator SpeedBoosting(){
-        Debug.Log("Speed boosted active");  // yes, I'm aware debug.log is a shit way of debugging. Leave me alone
-        if (speedBoosting){
-            playerMovement.speed *= 2;
-            yield return new WaitForSeconds(speedBoostDuration);
-            playerMovement.speed /= 2;
-        }
+
+       
+        playerMovement.speed *= 2;
+        yield return new WaitForSeconds(speedBoostDuration);
+        playerMovement.speed /= 2;
+      
         speedBoosting = false;
+        hasPowerUp = false;
     
     }
     
 
     private IEnumerator Ghosting(){
-        if (isGhosting){
-            foreach (GameObject ga in walls){
-                ga.GetComponent<Collider>();
-                Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), true);
-            }
+        
+        foreach (GameObject ga in walls){
+            Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), true);
         }
+        
 
         Debug.Log("Ghosting");
 
         yield return new WaitForSeconds(ghostingDuration);
         isGhosting = false;
+        hasPowerUp=false;
        
     }
 
     private IEnumerator SelfInvisibility()
     {
-        if (isInvisible){
-            bodyMeshRenderer.enabled = false;
-            yield return new WaitForSeconds(invisDuration);
-            bodyMeshRenderer.enabled = true;
-        }
+        bodyMeshRenderer.enabled = false;
+        yield return new WaitForSeconds(invisDuration);
+        bodyMeshRenderer.enabled = true;
+        hasPowerUp = false;
     }
 }

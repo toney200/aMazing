@@ -322,6 +322,11 @@ GameObject:
   m_CorrespondingSourceObject: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
   m_PrefabInstance: {fileID: 1260501453}
   m_PrefabAsset: {fileID: 0}
+--- !u!137 &1260501455 stripped
+SkinnedMeshRenderer:
+  m_CorrespondingSourceObject: {fileID: 4741934166163917621, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+  m_PrefabInstance: {fileID: 1260501453}
+  m_PrefabAsset: {fileID: 0}
 --- !u!114 &1260501456
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -334,7 +339,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cb7f22ce64de1104bb2d65a5c1848cd3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  bodyMeshRenderer: {fileID: 0}
+  bodyMeshRenderer: {fileID: 1260501455}
   playerCollider: {fileID: 1260501458}
   walls:
   - {fileID: 309054439}
