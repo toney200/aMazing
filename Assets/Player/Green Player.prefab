@@ -1421,7 +1421,7 @@ Animation:
   m_GameObject: {fileID: 5965801675845295684}
   m_Enabled: 1
   serializedVersion: 3
-  m_Animation: {fileID: 0}
+  m_Animation: {fileID: 7400000, guid: 9033d1ad6d3f9044ab9f74cdd8ce40d8, type: 2}
   m_Animations: []
   m_WrapMode: 0
   m_PlayAutomatically: 1
@@ -1436,8 +1436,8 @@ Animator:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 5965801675845295684}
   m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 0}
+  m_Avatar: {fileID: 9000000, guid: 9cc614e3599d98742b353b64045acc13, type: 3}
+  m_Controller: {fileID: 9100000, guid: bea48d22896b89f4e835a8317ff4d8c2, type: 2}
   m_CullingMode: 0
   m_UpdateMode: 0
   m_ApplyRootMotion: 0
@@ -1491,12 +1491,24 @@ MonoBehaviour:
     m_ActionName: CharacterControls/Movement[/DualShock4GamepadHID/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
       m_Calls: []
-    m_ActionId: 2a656ef2-2e88-4ec0-99fd-9a0e72800afd
-    m_ActionName: CharacterControls/Run[/DualShock4GamepadHID/leftShoulder]
-  - m_PersistentCalls:
-      m_Calls: []
     m_ActionId: 72d97cca-27b6-4839-bf6c-44720bcdfd32
     m_ActionName: Player2/Movement[/DualShock4GamepadHID/leftStick,/DualSenseGamepadHID/leftStick]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: f981afed-df70-4394-b2d1-c06bcbcc74cd
+    m_ActionName: CharacterControls/PowerUp
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 13063909-3c9c-43c0-a69c-71ea6034d209
+    m_ActionName: Player2/New action
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d57e2a3-9423-4d36-940d-1be55d0fc082
+    m_ActionName: Player3/Movement[/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c3341627-941e-43f7-9228-8326c6d3abb3
+    m_ActionName: Player4/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: Player2
