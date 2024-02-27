@@ -1,21 +1,27 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
 public class PlayerManager : MonoBehaviour
 {
     private Rigidbody rb;
+    private PlayerInput playerInput;
     private PlayerMovement playerMovement; 
+    private Player2Movement player2Movement;
+    private Player3Movement player3Movement;
     
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
-    [SerializeField] private PlayerInput playerInput;
+    
 
-    private String[] powers = { "speed", "ghosting", "invisibility" };
+    private int powers = 3;
 
     private bool hasPowerUp = false;
+
+    public String name;
 
     // Ghosting-specific variables
     [SerializeField] private GameObject[] walls = {};
@@ -35,13 +41,17 @@ public class PlayerManager : MonoBehaviour
     void Start(){
         rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
+        playerInput = GetComponent<PlayerInput>(); ;
+        
 
-        InvokeRepeating("EnablePowerUp", 5f, 20f);
+        name = gameObject.name;
+
+        //InvokeRepeating("EnablePowerUp", 5f, 20f);
     }
 
     // Update is called once per frame
     void Update(){
-        
+        hasPowerUp = true;
     }
 
     private void OnTriggerEnter(Collider other){
@@ -52,12 +62,54 @@ public class PlayerManager : MonoBehaviour
         
     }
 
-    private IEnumerator EnablePowerUp(){
-        yield return new WaitForSeconds(1f);
-        int powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(0, powers.Length-1));
+    private void OnPowerUp()
+    {
+        Debug.Log("Button pressed");
+        if (hasPowerUp)
+        {
+            int powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers));
+            
+            switch (powerSelect)
+            {
+                case 1:
+                    
+                    
+                        speedBoosting = true;
+                        StartCoroutine(SpeedBoosting());
+                    
+                    break;
+
+                case 2:
+                  
+                    
+                        isGhosting = true;
+                        StartCoroutine( Ghosting());
+                    
+                    break;
+
+                case 3:
+                    
+                    
+                        isInvisible = true;
+                        StartCoroutine(SelfInvisibility());
+                    
+                    break;
+
+                default:
+                    Debug.Log("powerSelect drew a value that does not have a corresponsing power-up");
+                    break;
+            }
+        }
+    }
+
+    
+    private void EnablePowerUp(){
+        
+        int powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers));
+        
         switch (powerSelect)
         {
-            case 0:
+            case 1:
                 if (hasPowerUp == false)
                 {
                     speedBoosting = true;
@@ -65,7 +117,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
 
-            case 1:
+            case 2:
                 if (hasPowerUp == false)
                 {
                     isGhosting = true;
@@ -73,7 +125,7 @@ public class PlayerManager : MonoBehaviour
                 }
                 break;
 
-            case 2:
+            case 3:
                 if (hasPowerUp == false)
                 {
                     isInvisible = true;
@@ -88,16 +140,29 @@ public class PlayerManager : MonoBehaviour
         
     }
     
+    
     private IEnumerator SpeedBoosting(){
 
-       
-        playerMovement.speed *= 2;
-        yield return new WaitForSeconds(speedBoostDuration);
-        playerMovement.speed /= 2;
-      
-        speedBoosting = false;
-        hasPowerUp = false;
-    
+        if (gameObject.name == "Blue Player")
+        {
+            Debug.Log("Pressed blue speed");
+            playerMovement.speed *= 2;
+            yield return new WaitForSeconds(speedBoostDuration);
+            playerMovement.speed /= 2;
+
+            speedBoosting = false;
+            hasPowerUp = false;
+        }
+
+        if(gameObject.name == "Green Player")
+        {
+            player2Movement.speed *= 2;
+            yield return new WaitForSeconds(speedBoostDuration);
+            playerMovement.speed /= 2;
+
+            speedBoosting = false;
+            hasPowerUp = false;
+        }
     }
     
 
@@ -121,6 +186,7 @@ public class PlayerManager : MonoBehaviour
         bodyMeshRenderer.enabled = false;
         yield return new WaitForSeconds(invisDuration);
         bodyMeshRenderer.enabled = true;
+        isInvisible = false;
         hasPowerUp = false;
     }
 }
