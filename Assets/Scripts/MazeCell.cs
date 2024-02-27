@@ -22,6 +22,9 @@ public class MazeCell : MonoBehaviour
 
     public bool isVisited { get; private set; }
 
+    /// <summary>
+    /// Disables the unvisited block to visually show a cell that has been visited
+    /// </summary>
     public void Visit()
     {
         isVisited = true;
@@ -46,5 +49,16 @@ public class MazeCell : MonoBehaviour
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+    }
+
+    public void ActivateWalls()
+    {
+        leftWall.SetActive(true);
+        rightWall.SetActive(true);
+        frontWall.SetActive(true);
+        backWall.SetActive(true);
+
+        isVisited = false;
+        unvisitedBlock.SetActive(true);
     }
 }

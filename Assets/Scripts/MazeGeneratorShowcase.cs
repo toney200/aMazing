@@ -4,7 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 
-public class MazeGenerator : MonoBehaviour
+public class MazeGeneratorShowcase : MonoBehaviour
 {
     [SerializeField]
     private MazeCell mazeCellPrefab;
