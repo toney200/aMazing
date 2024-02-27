@@ -341,7 +341,7 @@ MonoBehaviour:
   mazeDepth: 20
   player: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
   playersParent: {fileID: 308846221}
-  numberOfPlayers: 4
+  numberOfPlayers: 3
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
