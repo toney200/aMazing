@@ -1,6 +1,7 @@
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
@@ -12,20 +13,26 @@ public class PlayerManager : MonoBehaviour
     private PlayerMovement playerMovement; 
     private Player2Movement player2Movement;
     private Player3Movement player3Movement;
+    public TextMeshProUGUI textCounter;
+    public Sprite[] powerIcons; 
     
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
 
-    // Power-Up variables
-    private int powers = 3;             // represents the number of power-ups currently in the game
-    private int powerSelect = 0;            // represents the power-up to be chosen at runtime 
-    private bool hasPowerUp = false;        // denotes whether a player has a power-up ability
-    private float powerUpTimer = 10f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
+    public float counter;
 
     public String name;
 
+    // Power-Up variables
+    private int powers = 3;             // represents the number of power-ups currently in the game
+    public bool hasPowerUp = false;        // denotes whether a player has a power-up ability
+    public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
+    public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
+
+    Gamepad gamepad;
+
     // Ghosting-specific variables
-    [SerializeField] private GameObject[] walls = {};
+    //[SerializeField] private GameObject[] walls = {};
     private bool isGhosting = false;
     private float ghostingDuration = 3f;
 
@@ -52,13 +59,27 @@ public class PlayerManager : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        if (!hasPowerUp) { 
-            StartCoroutine(PowerUpTimer());
+        if (!hasPowerUp) {
+            //counter -= 1 * Time.deltaTime;
+
+            if (counter <= 0)
+            {
+                hasPowerUp=true; 
+            }
+            else
+            {
+                counter -= 1 * Time.deltaTime;
+            }
+            //StartCoroutine(PowerUpTimer());
         }
         if (hasPowerUp)
         {
             powerSelect = EnablePowerUp();
         }
+
+        //if(gamepad.nam)
+
+        
     }
 
 
@@ -68,7 +89,10 @@ public class PlayerManager : MonoBehaviour
 
 
     private void OnCollisionEnter(Collision collision){
-        
+        if (collision.gameObject.tag == "Walls" && isGhosting == true)
+        {
+            Physics.IgnoreCollision(playerCollider, collision.gameObject.GetComponent<Collider>(), true);
+        }
     }
 
 
@@ -113,6 +137,8 @@ public class PlayerManager : MonoBehaviour
                     break;
             }
         }
+
+
     }
 
 
@@ -155,7 +181,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SpeedBoosting(){
 
-        if (gameObject.name == "Blue Player")
+        if (gameObject.name.Contains("Blue Player"))
         {
             Debug.Log("Pressed blue speed");
             playerMovement.speed *= 2;
@@ -164,9 +190,10 @@ public class PlayerManager : MonoBehaviour
 
             speedBoosting = false;
             hasPowerUp = false;
+            counter = powerUpTimer;
         }
 
-        if(gameObject.name == "Green Player")
+        if(gameObject.name.Contains("Green Player"))
         {
             player2Movement.speed *= 2;
             yield return new WaitForSeconds(speedBoostDuration);
@@ -174,9 +201,10 @@ public class PlayerManager : MonoBehaviour
 
             speedBoosting = false;
             hasPowerUp = false;
+            counter = powerUpTimer;
         }
 
-        if (gameObject.name == "Yellow Player")
+        if (gameObject.name.Contains("Yellow Player"))
         {
             player3Movement.speed *= 2;
             yield return new WaitForSeconds(speedBoostDuration);
@@ -184,6 +212,7 @@ public class PlayerManager : MonoBehaviour
 
             speedBoosting = false;
             hasPowerUp = false;
+            counter = powerUpTimer;
         }
     }
     
@@ -193,24 +222,26 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator Ghosting(){
 
-        if (isGhosting)
+        /*if (isGhosting)
         {
             foreach (GameObject ga in walls)
             {
                 Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), true);
             }
         }
-
+        */
         Debug.Log("Ghosting");
 
         yield return new WaitForSeconds(ghostingDuration);
         isGhosting = false;
-        foreach (GameObject ga in walls)
+        /*
+         * foreach (GameObject ga in walls)
         {
             Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), false);
         }
         hasPowerUp = false;
-       
+       */
+        counter = 5;
     }
 
 
@@ -225,5 +256,6 @@ public class PlayerManager : MonoBehaviour
         bodyMeshRenderer.enabled = true;
         isInvisible = false;
         hasPowerUp = false;
+        counter = 5;
     }
 }
