@@ -1857,6 +1857,10 @@ PrefabInstance:
       propertyPath: walls.Array.data[7]
       value: 
       objectReference: {fileID: 22542071}
+    - target: {fileID: 8576323472564000765, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+      propertyPath: powerUpIcons.Array.size
+      value: 4
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
