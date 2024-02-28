@@ -342,6 +342,10 @@ MonoBehaviour:
   player: {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
   playersParent: {fileID: 308846221}
   numberOfPlayers: 3
+  playerPrefabList:
+  - {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+  - {fileID: 5965801675845295684, guid: d0c1c2d2debddb44c96050b2dc37dd68, type: 3}
+  - {fileID: 4364621353782331464, guid: 09decdfbdcb068c4fbbaee6bdd3527b8, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
