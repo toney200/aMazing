@@ -5,6 +5,8 @@ using TMPro;
 using UnityEditor;
 using UnityEngine;
 using UnityEngine.InputSystem;
+using UnityEngine.UI;
+using UnityEngine.UIElements;
 
 public class PlayerManager : MonoBehaviour
 {
@@ -14,14 +16,17 @@ public class PlayerManager : MonoBehaviour
     private Player2Movement player2Movement;
     private Player3Movement player3Movement;
     public TextMeshProUGUI textCounter;
-    public Sprite[] powerIcons; 
+    public Sprite[] powerIcons;
+    public GameObject icon;
+
+    private UnityEngine.UI.Image pwImage;
     
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
 
-    public float counter;
-
-    public String name;
+    public float counter = 5;
+    private bool keepingPowerUp = false;
+   
 
     // Power-Up variables
     private int powers = 3;             // represents the number of power-ups currently in the game
@@ -29,7 +34,7 @@ public class PlayerManager : MonoBehaviour
     public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
     public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
 
-    Gamepad gamepad;
+    
 
     // Ghosting-specific variables
     //[SerializeField] private GameObject[] walls = {};
@@ -50,6 +55,7 @@ public class PlayerManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>(); ;
+        pwImage = icon.GetComponent<UnityEngine.UI.Image>();
        
         name = gameObject.name;
 
@@ -74,7 +80,11 @@ public class PlayerManager : MonoBehaviour
         }
         if (hasPowerUp)
         {
-            powerSelect = EnablePowerUp();
+            if (!keepingPowerUp)
+            {
+                powerSelect = EnablePowerUp();
+            }
+            
         }
 
         //if(gamepad.nam)
@@ -148,30 +158,27 @@ public class PlayerManager : MonoBehaviour
     private int EnablePowerUp(){
         
         powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers+1));
-        
+        pwImage.sprite = powerIcons[powerSelect - 1];
         switch (powerSelect)
         {
             case 1:               
-                    speedBoosting = true;
-                    return 1;
-                //break;
+                speedBoosting = true;
+                break;
 
             case 2:              
-                    isGhosting = true;
-                    return 2;
-                
-                //break;
+                isGhosting = true;  
+                break;
 
             case 3:                
-                    isInvisible = true;
-                    return 3;                
-               // break;
+                isInvisible = true;              
+                break;
 
             default:
                 Debug.Log("Death at powerSelect. See EnablePowerUp() :(");
                 break;
         }
         hasPowerUp = true;
+        keepingPowerUp = true;
         return powerSelect;
     }
     
@@ -197,7 +204,7 @@ public class PlayerManager : MonoBehaviour
         {
             player2Movement.speed *= 2;
             yield return new WaitForSeconds(speedBoostDuration);
-            playerMovement.speed /= 2;
+            player2Movement.speed /= 2;
 
             speedBoosting = false;
             hasPowerUp = false;
@@ -214,6 +221,7 @@ public class PlayerManager : MonoBehaviour
             hasPowerUp = false;
             counter = powerUpTimer;
         }
+        keepingPowerUp = false;
     }
     
     /*
@@ -242,6 +250,7 @@ public class PlayerManager : MonoBehaviour
         hasPowerUp = false;
        */
         counter = 5;
+        keepingPowerUp = false;
     }
 
 
@@ -256,6 +265,7 @@ public class PlayerManager : MonoBehaviour
         bodyMeshRenderer.enabled = true;
         isInvisible = false;
         hasPowerUp = false;
+        keepingPowerUp = false;
         counter = 5;
     }
 }
