@@ -61,4 +61,24 @@ public class MazeCell : MonoBehaviour
         isVisited = false;
         unvisitedBlock.SetActive(true);
     }
+
+    public void BoundaryLeft()
+    {
+        leftWall.tag = "Boundary";
+    }
+
+    public void BoundaryBack()
+    {
+        backWall.tag = "Boundary";
+    }
+
+    public void BoundaryFront()
+    {
+        frontWall.tag = "Boundary";
+    }
+
+    public void BoundaryRight()
+    {
+        rightWall.tag = "Boundary";
+    }
 }

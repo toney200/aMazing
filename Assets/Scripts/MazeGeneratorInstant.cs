@@ -50,6 +50,26 @@ public class MazeGeneratorInstant : MonoBehaviour
                 else //Otherwise, generate a regular maze cell
                 {
                     mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                    //Set Boundary Left 
+                    if(i == 0)
+                    {
+                        mazeGrid[i, j].BoundaryLeft();
+                    }
+                    //Set Boundary Right
+                    if(i == mazeWidth - 1)
+                    {
+                        mazeGrid[i, j].BoundaryRight();
+                    }
+                    //Set Boundary Front
+                    if(j == mazeDepth - 1)
+                    {
+                        mazeGrid[i, j].BoundaryFront();
+                    }
+                    //Set Boundary Back
+                    if(j == 0)
+                    {
+                        mazeGrid[i, j].BoundaryBack();
+                    }
                 }
                 
             }
