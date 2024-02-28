@@ -29,6 +29,10 @@ public class MazeGeneratorInstant : MonoBehaviour
     [SerializeField]
     private int numberOfPlayers;
 
+    public int xFirst;
+    public int zFirst;
+    private int edge;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -223,9 +227,11 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
+        xFirst = xStartPoint;
+        zFirst = zStartPoint;
         if(isFirstRound)
         {
-            SpawnPlayers(xStartPoint, zStartPoint);  //DO NOT PUT IN Start(), coordinates from this method are needed
+              
         }
         else
         {
@@ -238,54 +244,51 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// </summary>
     /// <param name="xStart"></param>
     /// <param name="zStart"></param>
-    private void SpawnPlayers(int xStart,  int zStart)
+    public void SpawnPlayers(GameObject playerPrefab, int playerIndex)
     {
-        int edge = CheckEdge(xStart, zStart);
-        int distance = GetDistance(xStart, zStart, edge);
+        edge = CheckEdge(xFirst, zFirst);
+        int distance = GetDistance(xFirst, zFirst, edge);
 
-        for (int i = 0; i < numberOfPlayers; i++)
+        if(playerIndex == 0)
         {
-            if(i == 0)
+            Instantiate(playerPrefab, new Vector3((float)xFirst, 0.35f, (float)zFirst), Quaternion.identity, playersParent.transform);
+            if(edge == 3)
             {
-                Instantiate(player, new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity, playersParent.transform);
-                if(edge == 3)
-                {
-                    edge = 0;
-                }
-                else
-                {
-                    edge++;
-                }
+                edge = 0;
             }
             else
             {
-                switch (edge)
-                {
-                    //Front edge case
-                    case 0:
-                        Instantiate(player, new Vector3((float)distance, 0.35f, 0), Quaternion.identity, playersParent.transform);
-                        edge++;
-                        break;
-                    //Left edge case
-                    case 1:
-                        Instantiate(player, new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity, playersParent.transform);
-                        edge++;
-                        break;
-                    //Back edge case
-                    case 2:
-                        Instantiate(player, new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity, playersParent.transform);
-                        edge++;
-                        break;
-                    //Right edge case
-                    case 3:
-                        Instantiate(player, new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity, playersParent.transform);
-                        edge = 0;
-                        break;
-                    //Failure
-                    default:
-                        Debug.Log("Error in calculation");
-                        break;
-                }
+                edge++;
+            }
+        }
+        else
+        {
+            switch (edge)
+            {
+                //Front edge case
+                case 0:
+                    Instantiate(playerPrefab, new Vector3((float)distance, 0.35f, 0), Quaternion.identity, playersParent.transform);
+                    edge++;
+                    break;
+                //Left edge case
+                case 1:
+                    Instantiate(playerPrefab, new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity, playersParent.transform);
+                    edge++;
+                    break;
+                //Back edge case
+                case 2:
+                    Instantiate(playerPrefab, new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity, playersParent.transform);
+                    edge++;
+                    break;
+                //Right edge case
+                case 3:
+                    Instantiate(playerPrefab, new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity, playersParent.transform);
+                    edge = 0;
+                    break;
+                //Failure
+                default:
+                    Debug.Log("Error in calculation");
+                    break;
             }
         }
     }
