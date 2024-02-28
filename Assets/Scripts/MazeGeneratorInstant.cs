@@ -29,6 +29,8 @@ public class MazeGeneratorInstant : MonoBehaviour
     [SerializeField]
     private int numberOfPlayers;
 
+    public GameObject[] playerPrefabList;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -45,7 +47,7 @@ public class MazeGeneratorInstant : MonoBehaviour
                     (i == ((mazeWidth - 1) / 2) && j == ((mazeDepth - 1) / 2) + 1) || //Bottom Left
                     (i == ((mazeWidth - 1) / 2) + 1 && j == ((mazeDepth - 1) / 2) + 1)) // Bottom Right
                 {
-                    mazeGrid[i, j] = Instantiate(mazeGoalPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                    mazeGrid[i, j] = Instantiate(mazeGoalPrefab, new Vector3(i, 0, j), Quaternion.identity, gameObject.transform);
                 }
                 else //Otherwise, generate a regular maze cell
                 {
@@ -267,7 +269,7 @@ public class MazeGeneratorInstant : MonoBehaviour
         {
             if(i == 0)
             {
-                Instantiate(player, new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity, playersParent.transform);
+                Instantiate(playerPrefabList[i], new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity, playersParent.transform);
                 if(edge == 3)
                 {
                     edge = 0;
@@ -283,22 +285,22 @@ public class MazeGeneratorInstant : MonoBehaviour
                 {
                     //Front edge case
                     case 0:
-                        Instantiate(player, new Vector3((float)distance, 0.35f, 0), Quaternion.identity, playersParent.transform);
+                        Instantiate(playerPrefabList[i], new Vector3((float)distance, 0.35f, 0), Quaternion.identity, playersParent.transform);
                         edge++;
                         break;
                     //Left edge case
                     case 1:
-                        Instantiate(player, new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity, playersParent.transform);
+                        Instantiate(playerPrefabList[i], new Vector3((float)(mazeWidth - 1), 0.35f, (float)distance), Quaternion.identity, playersParent.transform);
                         edge++;
                         break;
                     //Back edge case
                     case 2:
-                        Instantiate(player, new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity, playersParent.transform);
+                        Instantiate(playerPrefabList[i], new Vector3((float)((mazeWidth - 1) - distance), 0.35f, (float)(mazeDepth - 1)), Quaternion.identity, playersParent.transform);
                         edge++;
                         break;
                     //Right edge case
                     case 3:
-                        Instantiate(player, new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity, playersParent.transform);
+                        Instantiate(playerPrefabList[i], new Vector3(0, 0.35f, (float)((mazeDepth - 1) - distance)), Quaternion.identity, playersParent.transform);
                         edge = 0;
                         break;
                     //Failure

@@ -105,7 +105,7 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""d9a30115-c116-4de1-bfa2-e919e087bc29"",
-                    ""path"": ""<DualSenseGamepadHID>/leftStick"",
+                    ""path"": ""<SwitchProControllerHID>/leftStick"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
