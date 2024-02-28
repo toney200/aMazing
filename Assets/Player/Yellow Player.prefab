@@ -783,6 +783,7 @@ GameObject:
   - component: {fileID: 7265970599499400765}
   - component: {fileID: -7149154196453568839}
   - component: {fileID: -1317685731420001589}
+  - component: {fileID: -764258949873765034}
   m_Layer: 0
   m_Name: Yellow Player
   m_TagString: Untagged
@@ -799,8 +800,8 @@ Transform:
   m_GameObject: {fileID: 4364621353782331464}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 5.8657064, y: 1.6210237, z: -2.366622}
-  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_LocalPosition: {x: 1.07, y: 1.48, z: -1.96}
+  m_LocalScale: {x: 0.5, y: 0.53, z: 0.5}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 9016753811918794953}
@@ -913,6 +914,29 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!136 &-764258949873765034
+CapsuleCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4364621353782331464}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4416504178655874376
 GameObject:
   m_ObjectHideFlags: 0
