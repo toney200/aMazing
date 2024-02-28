@@ -1995,7 +1995,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7580976497959712595, guid: 199a6d6114eb0444dabd688d46fdc6a1, type: 3}
       propertyPath: m_JoinBehavior
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 7580976497959712595, guid: 199a6d6114eb0444dabd688d46fdc6a1, type: 3}
       propertyPath: m_PlayerPrefab
@@ -2004,6 +2004,10 @@ PrefabInstance:
     - target: {fileID: 7580976497959712595, guid: 199a6d6114eb0444dabd688d46fdc6a1, type: 3}
       propertyPath: m_NotificationBehavior
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 7580976497959712595, guid: 199a6d6114eb0444dabd688d46fdc6a1, type: 3}
+      propertyPath: m_JoinAction.m_Action.m_SingletonActionBindings.Array.data[0].m_Path
+      value: <DualShockGamepad>/buttonSouth
       objectReference: {fileID: 0}
     - target: {fileID: 7903645688843820932, guid: 199a6d6114eb0444dabd688d46fdc6a1, type: 3}
       propertyPath: m_LocalPosition.x

@@ -5,6 +5,9 @@ TagManager:
   serializedVersion: 2
   tags:
   - Walls
+  - Wall
+  - Goal
+  - Boundary
   layers:
   - Default
   - TransparentFX
