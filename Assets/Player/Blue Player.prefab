@@ -1530,10 +1530,11 @@ GameObject:
   - component: {fileID: -4686802047013700783}
   - component: {fileID: 5736532424305490701}
   - component: {fileID: 8576323472564000765}
+  - component: {fileID: 57842184154276384}
   m_Layer: 0
   m_Name: Blue Player
   m_TagString: Player
-  m_Icon: {fileID: 0}
+  m_Icon: {fileID: -964228994112308473, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
@@ -1677,6 +1678,21 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
+--- !u!114 &57842184154276384
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6999135907862676453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b4bccbcdbea91b84e86858500dcdbff2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  counter: 5
+  counterText: {fileID: 0}
+  pwIcon: {fileID: 0}
 --- !u!1 &7204009026325358369
 GameObject:
   m_ObjectHideFlags: 0
