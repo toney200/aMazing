@@ -258,7 +258,6 @@ public class PlayerManager : MonoBehaviour
         keepingPowerUp = false;
     }
 
-
     /*
      * Disables the Mesh Renderer inserted into the SerializedField at the beginning of the class. After execution isInvisible and hasPowerUp are disabled to enable other methods to function.
      */

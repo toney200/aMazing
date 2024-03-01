@@ -184,17 +184,6 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                     ""isPartOfComposite"": false
                 },
                 {
-                    ""name"": """",
-                    ""id"": ""a6ebeccf-07a1-4d54-9bcf-d36c1698b0dc"",
-                    ""path"": ""<Keyboard>/y"",
-                    ""interactions"": """",
-                    ""processors"": """",
-                    ""groups"": """",
-                    ""action"": ""PowerUp"",
-                    ""isComposite"": false,
-                    ""isPartOfComposite"": false
-                },
-                {
                     ""name"": ""Arrows"",
                     ""id"": ""4c24096a-d66c-4a64-9e31-b2613bc68afa"",
                     ""path"": ""2DVector"",
