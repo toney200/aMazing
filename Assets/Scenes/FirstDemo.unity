@@ -945,6 +945,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 8748653745974761027, guid: a9deee2b1f205854dbd0a1605c0aa96d, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: -50
+      objectReference: {fileID: 0}
     - target: {fileID: 9107594804735306057, guid: a9deee2b1f205854dbd0a1605c0aa96d, type: 3}
       propertyPath: m_Name
       value: Power-Up Controller
