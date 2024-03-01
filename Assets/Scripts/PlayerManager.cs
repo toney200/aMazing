@@ -18,6 +18,9 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI textCounter;
     public Sprite[] powerIcons;
     public GameObject icon;
+    
+   
+
 
     private UnityEngine.UI.Image pwImage;
     
@@ -81,9 +84,10 @@ public class PlayerManager : MonoBehaviour
         if (!hasPowerUp) {
             if (counter <= 0)
             {
-                hasPowerUp=true;
+                hasPowerUp=true;                
                 textCounter.text = "";
-                icon.SetActive(true);
+                icon.SetActive(true);    
+                   
             }
             else
             {
@@ -136,6 +140,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
             if (hasPowerUp)
             {
+                   
                 switch (powerSelect)
                 {
                     case 1:
