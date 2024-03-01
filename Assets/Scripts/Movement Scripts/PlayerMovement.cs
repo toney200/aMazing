@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
 
         input.CharacterControls.PowerUp.performed += ctx =>
         {
-            Debug.Log("Button pressed");
+            Debug.Log(" B button pressed");
         };
 
     }

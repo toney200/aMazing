@@ -175,7 +175,18 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""3a38e3ec-fb6d-4086-9784-f0735e850ba9"",
-                    ""path"": ""<DualShockGamepad>/buttonSouth"",
+                    ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""a6ebeccf-07a1-4d54-9bcf-d36c1698b0dc"",
+                    ""path"": ""<Keyboard>/y"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",

@@ -1493,7 +1493,19 @@ MonoBehaviour:
     m_ActionId: d9fd4e85-3466-49ce-b997-ebc2ee33ab78
     m_ActionName: CharacterControls/Movement[/DualShock4GamepadHID/leftStick,/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d]
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: 
+        m_MethodName: 
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: 
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 72d97cca-27b6-4839-bf6c-44720bcdfd32
     m_ActionName: Player2/Movement[/DualShock4GamepadHID/leftStick,/DualSenseGamepadHID/leftStick]
   - m_PersistentCalls:
@@ -1501,7 +1513,19 @@ MonoBehaviour:
     m_ActionId: f981afed-df70-4394-b2d1-c06bcbcc74cd
     m_ActionName: CharacterControls/PowerUp
   - m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 7802505867198776003}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: OnPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
     m_ActionId: 13063909-3c9c-43c0-a69c-71ea6034d209
     m_ActionName: Player2/New action
   - m_PersistentCalls:
@@ -1581,6 +1605,7 @@ MonoBehaviour:
   bodyMeshRenderer: {fileID: 5808270990880203351}
   playerCollider: {fileID: 4003243303595282087}
   counter: 5
+  playerScore: 0
   hasPowerUp: 0
   powerSelect: 0
   powerUpTimer: 5

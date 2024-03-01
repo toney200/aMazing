@@ -1668,7 +1668,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Actions: {fileID: -944628639613478452, guid: 2bb5a0c568541f84686b33685c4fbde8, type: 3}
-  m_NotificationBehavior: 0
+  m_NotificationBehavior: 2
   m_UIInputModule: {fileID: 0}
   m_DeviceLostEvent:
     m_PersistentCalls:
@@ -1679,7 +1679,47 @@ MonoBehaviour:
   m_ControlsChangedEvent:
     m_PersistentCalls:
       m_Calls: []
-  m_ActionEvents: []
+  m_ActionEvents:
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: d9fd4e85-3466-49ce-b997-ebc2ee33ab78
+    m_ActionName: CharacterControls/Movement[/Keyboard/w,/Keyboard/s,/Keyboard/a,/Keyboard/d,/SwitchProControllerHID/leftStick]
+  - m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 440356566404681331}
+        m_TargetAssemblyTypeName: PlayerManager, Assembly-CSharp
+        m_MethodName: OnPowerUp
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+    m_ActionId: f981afed-df70-4394-b2d1-c06bcbcc74cd
+    m_ActionName: CharacterControls/PowerUp[/SwitchProControllerHID/buttonSouth,/Keyboard/t]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 72d97cca-27b6-4839-bf6c-44720bcdfd32
+    m_ActionName: Player2/Movement[/DualShock4GamepadHID/leftStick,/Keyboard/upArrow,/Keyboard/downArrow,/Keyboard/leftArrow,/Keyboard/rightArrow]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 13063909-3c9c-43c0-a69c-71ea6034d209
+    m_ActionName: Player2/PowerUp[/DualShock4GamepadHID/buttonSouth]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: 2d57e2a3-9423-4d36-940d-1be55d0fc082
+    m_ActionName: Player3/Movement[/Keyboard/i,/Keyboard/k,/Keyboard/j,/Keyboard/l]
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: fbbbe6d0-8cba-4be6-b36e-b3ef71cfa3ca
+    m_ActionName: Player3/PowerUp
+  - m_PersistentCalls:
+      m_Calls: []
+    m_ActionId: c3341627-941e-43f7-9228-8326c6d3abb3
+    m_ActionName: Player4/New action
   m_NeverAutoSwitchControlSchemes: 0
   m_DefaultControlScheme: 
   m_DefaultActionMap: CharacterControls
@@ -1709,6 +1749,7 @@ MonoBehaviour:
   bodyMeshRenderer: {fileID: 4741934166163917621}
   playerCollider: {fileID: 5736532424305490701}
   counter: 5
+  playerScore: 0
   hasPowerUp: 0
   powerSelect: 0
   powerUpTimer: 5

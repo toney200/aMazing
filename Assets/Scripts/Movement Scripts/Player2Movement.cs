@@ -29,7 +29,7 @@ public class Player2Movement : MonoBehaviour
 
         input.Player2.PowerUp.performed += ctx =>
         {
-            Debug.Log("X button pressed");
+            Debug.Log(" shoulder button pressed");
         };
 
 
