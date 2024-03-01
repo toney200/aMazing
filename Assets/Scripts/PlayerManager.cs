@@ -34,13 +34,16 @@ public class PlayerManager : MonoBehaviour
     public bool hasPowerUp = false;        // denotes whether a player has a power-up ability
     public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
     public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
-
+    private bool usingPowerUp = false;
+    private bool usingPowerUpLength = false;
+    private float powerUpDuration;
+    public TextMeshProUGUI powerUpLengthText;
     
 
     // Ghosting-specific variables
     //[SerializeField] private GameObject[] walls = {};
     private bool isGhosting = false;
-    private float ghostingDuration = 3f;
+    private float ghostingDuration = 1f;
 
     // Speed-boost  variables
     private bool speedBoosting = false;
@@ -56,7 +59,6 @@ public class PlayerManager : MonoBehaviour
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>(); ;
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
-       
         name = gameObject.name;
 
         if (gameObject.name.Contains("Blue Player"))
@@ -95,21 +97,22 @@ public class PlayerManager : MonoBehaviour
             {
                 powerSelect = EnablePowerUp();
             }
+
+            if(usingPowerUpLength)
+            {
+                if(powerUpDuration <= 0)
+                {
+                    usingPowerUpLength = false;
+                    powerUpLengthText.text = "";
+                }
+                else
+                {
+                    powerUpDuration -= 1 * Time.deltaTime;
+                    powerUpLengthText.text = powerUpDuration.ToString("0");
+                }
+            }
         }
     }
-
-
-    private void OnTriggerEnter(Collider other){
-
-    }
-
-    private void OnCollisionEnter(Collision collision){
-        if (collision.gameObject.tag == "Walls" && isGhosting == true)
-        {
-            Physics.IgnoreCollision(playerCollider, collision.gameObject.GetComponent<Collider>(), true);
-        }
-    }
-
 
     /*
      * Waits for a number of seconds equal to powerUpTimer before calling the method EnablePowerUp(). To be called when an instance's hasPowerUp is set to false by any means. 
@@ -125,35 +128,37 @@ public class PlayerManager : MonoBehaviour
      * Provides functionality to the PowerUp action within the playerInput action map. On activation, starts the coroutine of the relevant power-up based on the chosen power up selected by 
      * EnablePowerUp() utilising the integer, powerSelect, as the means to select a coroutine.
      */
-    public void OnPowerUp()
+    private void OnPowerUp()
     {
-        Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
-        if (hasPowerUp)
-        {  
-            switch (powerSelect)
+        if(!usingPowerUp)
+        {
+            usingPowerUp = true;
+            Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
+            if (hasPowerUp)
             {
-                case 1:                 
+                switch (powerSelect)
+                {
+                    case 1:
                         speedBoosting = true;
-                        StartCoroutine(SpeedBoosting());       
-                    break;
+                        StartCoroutine(SpeedBoosting());
+                        break;
 
-                case 2:                                     
+                    case 2:
                         isGhosting = true;
-                        StartCoroutine(Ghosting());                    
-                    break;
+                        StartCoroutine(Ghosting());
+                        break;
 
-                case 3:                                     
+                    case 3:
                         isInvisible = true;
-                        StartCoroutine(SelfInvisibility());                  
-                    break;
+                        StartCoroutine(SelfInvisibility());
+                        break;
 
-                default:
-                    Debug.Log("powerSelect drew a value that does not have a corresponsing power-up");
-                    break;
+                    default:
+                        Debug.Log("powerSelect drew a value that does not have a corresponsing power-up");
+                        break;
+                }
             }
         }
-
-
     }
 
 
@@ -167,15 +172,12 @@ public class PlayerManager : MonoBehaviour
         switch (powerSelect)
         {
             case 1:               
-                speedBoosting = true;
                 break;
 
             case 2:              
-                isGhosting = true;  
                 break;
 
-            case 3:                
-                isInvisible = true;              
+            case 3:                            
                 break;
 
             default:
@@ -193,6 +195,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SpeedBoosting(){
 
+        SetPowerDurationTimer(speedBoostDuration);
         if (gameObject.name.Contains("Blue Player"))
         {
             Debug.Log("Pressed blue speed");
@@ -227,6 +230,8 @@ public class PlayerManager : MonoBehaviour
             counter = powerUpTimer;
         }
         keepingPowerUp = false;
+        usingPowerUp = false;
+        icon.SetActive(false);
     }
     
     /*
@@ -234,28 +239,20 @@ public class PlayerManager : MonoBehaviour
      * as to enable power-up selection once more.
      */
     private IEnumerator Ghosting(){
-
-        /*if (isGhosting)
-        {
-            foreach (GameObject ga in walls)
-            {
-                Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), true);
-            }
-        }
-        */
         Debug.Log("Ghosting");
-
+        playerCollider.isTrigger = true;
+        rb.constraints = RigidbodyConstraints.FreezePositionY;
+        SetPowerDurationTimer(ghostingDuration);
         yield return new WaitForSeconds(ghostingDuration);
         isGhosting = false;
-        /*
-         * foreach (GameObject ga in walls)
-        {
-            Physics.IgnoreCollision(playerCollider, ga.GetComponent<Collider>(), false);
-        }
-        hasPowerUp = false;
-       */
+        playerCollider.isTrigger = false;
+        rb.constraints = RigidbodyConstraints.None;
+        rb.constraints = RigidbodyConstraints.FreezeRotation;
         counter = 5;
+        hasPowerUp = false;
+        usingPowerUp = false;
         keepingPowerUp = false;
+        icon.SetActive(false);
     }
 
 
@@ -264,13 +261,22 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SelfInvisibility()
     {
-
+        SetPowerDurationTimer(invisDuration);
         bodyMeshRenderer.enabled = false;
         yield return new WaitForSeconds(invisDuration);
         bodyMeshRenderer.enabled = true;
         isInvisible = false;
         hasPowerUp = false;
         keepingPowerUp = false;
+        usingPowerUp = false;
         counter = 5;
+        icon.SetActive(false);
+    }
+
+    private void SetPowerDurationTimer(float time)
+    { 
+        usingPowerUpLength = true;
+        powerUpDuration = time;
+        powerUpLengthText.text = powerUpDuration.ToString("0");
     }
 }
