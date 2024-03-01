@@ -24,8 +24,9 @@ public class PlayerManager : MonoBehaviour
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
 
-    public float counter = 5;
-    private bool keepingPowerUp = false;
+    public float counter = 5; //Power up timer
+    private bool keepingPowerUp = false; //if player has power up and has not used it
+    public int playerScore = 0; //the player's score
    
 
     // Power-Up variables
@@ -53,30 +54,40 @@ public class PlayerManager : MonoBehaviour
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody>();
-        playerMovement = GetComponent<PlayerMovement>();
         playerInput = GetComponent<PlayerInput>(); ;
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
        
         name = gameObject.name;
 
-        hasPowerUp = true;
+        if (gameObject.name.Contains("Blue Player"))
+        {
+            playerMovement = GetComponent<PlayerMovement>();
+        }
+        else if (gameObject.name.Contains("Green Player"))
+        {
+            player2Movement = GetComponent<Player2Movement>();
+        }
+        else if (gameObject.name.Contains("Yellow Player"))
+        {
+            player3Movement = GetComponent<Player3Movement>();
+        }
     }
 
 
     // Update is called once per frame
     void Update(){
         if (!hasPowerUp) {
-            //counter -= 1 * Time.deltaTime;
-
             if (counter <= 0)
             {
-                hasPowerUp=true; 
+                hasPowerUp=true;
+                textCounter.text = "";
+                icon.SetActive(true);
             }
             else
             {
                 counter -= 1 * Time.deltaTime;
+                textCounter.text = counter.ToString("0");
             }
-            //StartCoroutine(PowerUpTimer());
         }
         if (hasPowerUp)
         {
@@ -84,19 +95,13 @@ public class PlayerManager : MonoBehaviour
             {
                 powerSelect = EnablePowerUp();
             }
-            
         }
-
-        //if(gamepad.nam)
-
-        
     }
 
 
     private void OnTriggerEnter(Collider other){
 
     }
-
 
     private void OnCollisionEnter(Collision collision){
         if (collision.gameObject.tag == "Walls" && isGhosting == true)
@@ -120,7 +125,7 @@ public class PlayerManager : MonoBehaviour
      * Provides functionality to the PowerUp action within the playerInput action map. On activation, starts the coroutine of the relevant power-up based on the chosen power up selected by 
      * EnablePowerUp() utilising the integer, powerSelect, as the means to select a coroutine.
      */
-    private void OnPowerUp()
+    public void OnPowerUp()
     {
         Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
         if (hasPowerUp)

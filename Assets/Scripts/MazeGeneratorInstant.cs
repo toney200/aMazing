@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
 
 public class MazeGeneratorInstant : MonoBehaviour
 {
@@ -30,6 +31,13 @@ public class MazeGeneratorInstant : MonoBehaviour
     private int numberOfPlayers;
 
     public GameObject[] playerPrefabList;
+
+    public TextMeshProUGUI blueScoreText;
+    private int blueScore = 0;
+    public TextMeshProUGUI greenScoreText;
+    private int greenScore = 0;
+    public TextMeshProUGUI yellowScoreText;
+    private int yellowScore = 0;
 
     // Start is called before the first frame update
     void Start()
@@ -80,11 +88,7 @@ public class MazeGeneratorInstant : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            MovePlayersToWaitPoint();
-            NewRound();
-        }
+
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -374,8 +378,26 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// <summary>
     /// Starts a new round when called
     /// </summary>
-    public void NewRound()
+    public void NewRound(int winner)
     {
+        switch(winner)
+        {
+            case 1:
+                blueScore++;
+                blueScoreText.text = blueScore.ToString();
+                break;
+            case 2:
+                greenScore++;
+                greenScoreText.text = greenScore.ToString();
+                break;
+            case 3:
+                yellowScore++;
+                yellowScoreText.text = yellowScore.ToString();
+                break;
+            default:
+                break;
+        }
+
         foreach(MazeCell mc in mazeGrid)
         {
             mc.ActivateWalls();
