@@ -4,6 +4,7 @@ using UnityEngine;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MazeGeneratorInstant : MonoBehaviour
 {
@@ -38,8 +39,27 @@ public class MazeGeneratorInstant : MonoBehaviour
     private int greenScore = 0;
     public TextMeshProUGUI yellowScoreText;
     private int yellowScore = 0;
+    public static bool first = true;
 
     // Start is called before the first frame update
+    void Awake()
+    {
+        if(first)
+        {
+            PlayerPrefs.DeleteAll();
+            first = false;
+        }
+        else
+        {
+            blueScore = PlayerPrefs.GetInt("Blue Score", 0);
+            blueScoreText.text = blueScore.ToString();
+            greenScore = PlayerPrefs.GetInt("Green Score", 0);
+            greenScoreText.text = greenScore.ToString();
+            yellowScore = PlayerPrefs.GetInt("Yellow Score", 0);
+            yellowScoreText.text = yellowScore.ToString();
+        }
+    }
+
     void Start()
     {
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
@@ -385,25 +405,29 @@ public class MazeGeneratorInstant : MonoBehaviour
             case 1:
                 blueScore++;
                 blueScoreText.text = blueScore.ToString();
+                PlayerPrefs.SetInt("Blue Score", blueScore);
                 break;
             case 2:
                 greenScore++;
                 greenScoreText.text = greenScore.ToString();
+                PlayerPrefs.SetInt("Green Score", greenScore);
                 break;
             case 3:
                 yellowScore++;
                 yellowScoreText.text = yellowScore.ToString();
+                PlayerPrefs.SetInt("Yellow Score", yellowScore);
                 break;
             default:
                 break;
         }
 
-        foreach(MazeCell mc in mazeGrid)
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+/*        foreach(MazeCell mc in mazeGrid)
         {
             mc.ActivateWalls();
         }
 
-        StartAtRandomEdgeCell(false);
+        StartAtRandomEdgeCell(false);*/
     }
 
     /// <summary>
