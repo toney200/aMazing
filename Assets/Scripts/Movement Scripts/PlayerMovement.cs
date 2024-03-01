@@ -9,6 +9,8 @@ public class PlayerMovement : MonoBehaviour
     PlayerHandler input;
     Vector2 currentmovement;
 
+   
+
     
     bool movementPressed;
     int isRunningHash;
@@ -18,6 +20,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        
+
         input = new PlayerHandler();
 
         //Set player input values using listeners.
@@ -27,7 +31,10 @@ public class PlayerMovement : MonoBehaviour
             movementPressed = currentmovement.x != 0 || currentmovement.y != 0;
         };
 
-        
+        input.CharacterControls.PowerUp.performed += ctx =>
+        {
+            Debug.Log("Button pressed");
+        };
 
     }
 
@@ -100,4 +107,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext ctx) => currentmovement = ctx.ReadValue<Vector2>();
+
+    
 }

@@ -27,6 +27,11 @@ public class Player2Movement : MonoBehaviour
             movementPressed = currentmovement.x != 0 || currentmovement.y != 0;
         };
 
+        input.Player2.PowerUp.performed += ctx =>
+        {
+            Debug.Log("X button pressed");
+        };
+
 
 
     }
