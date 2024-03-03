@@ -8,7 +8,7 @@ public class Player2Movement : MonoBehaviour
     Animator animator;
     PlayerHandler input;
     Vector2 currentmovement;
-
+    
 
     bool movementPressed;
     int isRunningHash;
@@ -30,6 +30,7 @@ public class Player2Movement : MonoBehaviour
         input.Player2.PowerUp.performed += ctx =>
         {
             Debug.Log(" shoulder button pressed");
+            
         };
 
 
