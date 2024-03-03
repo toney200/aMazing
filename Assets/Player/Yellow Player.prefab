@@ -1770,11 +1770,11 @@ RectTransform:
   m_Children: []
   m_Father: {fileID: 7956994926510203240}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0, y: 1}
-  m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 344.99997, y: -80}
+  m_AnchorMin: {x: 0, y: 0}
+  m_AnchorMax: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 240, y: 45}
   m_SizeDelta: {x: 200, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_Pivot: {x: 0, y: 0}
 --- !u!222 &7882718361223729630
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -1812,8 +1812,8 @@ MonoBehaviour:
   m_fontMaterials: []
   m_fontColor32:
     serializedVersion: 2
-    rgba: 4294921029
-  m_fontColor: {r: 0.2688679, g: 0.29252914, b: 1, a: 1}
+    rgba: 4280062446
+  m_fontColor: {r: 0.93333334, g: 0.5686275, b: 0.10980392, a: 1}
   m_enableVertexGradient: 0
   m_colorMode: 3
   m_fontColorGradient:
