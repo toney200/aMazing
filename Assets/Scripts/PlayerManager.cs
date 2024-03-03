@@ -26,10 +26,12 @@ public class PlayerManager : MonoBehaviour
     
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
+    [SerializeField] private GameObject[] otherPlayers;
 
     public float counter = 5; //Power up timer
     private bool keepingPowerUp = false; //if player has power up and has not used it
     public int playerScore = 0; //the player's score
+    public Vector3 startSpawn;
    
 
     // Power-Up variables
@@ -57,6 +59,18 @@ public class PlayerManager : MonoBehaviour
     private bool isInvisible = false;
     private float invisDuration = 6f;
 
+<<<<<<< Updated upstream
+=======
+    // Freezing variables
+    private float freezeDuration = 3f;
+
+    private void Awake()
+    {
+        usingPowerUp = false;
+
+        startSpawn = transform.position;
+    }
+>>>>>>> Stashed changes
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody>();
@@ -275,6 +289,40 @@ public class PlayerManager : MonoBehaviour
         usingPowerUp = false;
         counter = 5;
         icon.SetActive(false);
+    }
+
+    private void Rewind()
+    {
+        gameObject.transform.position = startSpawn;
+        
+        foreach(GameObject player in otherPlayers)
+        {
+            player.GetComponent<PlayerManager>().Rewind();
+        }
+
+        hasPowerUp = false;
+        keepingPowerUp = false;
+        usingPowerUp = false;
+        counter = 5;
+    }
+
+    private IEnumerator Freeze()
+    {
+        foreach(GameObject player in otherPlayers){ 
+            Rigidbody rigidbodies  = player.GetComponent<Rigidbody>();
+
+            rigidbodies.constraints = RigidbodyConstraints.FreezePosition;
+        }
+
+        yield return new WaitForSeconds(freezeDuration);
+
+        foreach (GameObject player in otherPlayers)
+        {
+            Rigidbody rigidbodies = player.GetComponent<Rigidbody>();
+
+            rigidbodies.constraints = RigidbodyConstraints.None;
+            rigidbodies.constraints = RigidbodyConstraints.FreezeRotation;
+        }
     }
 
     private void SetPowerDurationTimer(float time)
