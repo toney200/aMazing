@@ -477,6 +477,7 @@ MonoBehaviour:
   blueScoreText: {fileID: 1254110634}
   greenScoreText: {fileID: 2046054367}
   yellowScoreText: {fileID: 1844060419}
+  music: {fileID: 831409847}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -586,7 +587,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &831409848
 Transform:
   m_ObjectHideFlags: 0
