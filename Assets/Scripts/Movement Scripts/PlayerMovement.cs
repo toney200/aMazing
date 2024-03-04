@@ -3,11 +3,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
+
 public class PlayerMovement : MonoBehaviour
 {
     Animator animator;
     PlayerHandler input;
     Vector2 currentmovement;
+
+   
 
     
     bool movementPressed;
@@ -18,6 +21,8 @@ public class PlayerMovement : MonoBehaviour
 
     void Awake()
     {
+        
+
         input = new PlayerHandler();
 
         //Set player input values using listeners.
@@ -27,7 +32,10 @@ public class PlayerMovement : MonoBehaviour
             movementPressed = currentmovement.x != 0 || currentmovement.y != 0;
         };
 
-        
+        input.CharacterControls.PowerUp.performed += ctx =>
+        {
+            Debug.Log(" B button pressed");
+        };
 
     }
 
@@ -100,4 +108,6 @@ public class PlayerMovement : MonoBehaviour
     }
 
     public void OnMove(InputAction.CallbackContext ctx) => currentmovement = ctx.ReadValue<Vector2>();
+
+    
 }

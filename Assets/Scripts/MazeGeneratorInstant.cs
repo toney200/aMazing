@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
+using UnityEngine.SceneManagement;
 
 public class MazeGeneratorInstant : MonoBehaviour
 {
@@ -31,7 +33,36 @@ public class MazeGeneratorInstant : MonoBehaviour
 
     public GameObject[] playerPrefabList;
 
+    public TextMeshProUGUI blueScoreText;
+    private int blueScore = 0;
+    public TextMeshProUGUI greenScoreText;
+    private int greenScore = 0;
+    public TextMeshProUGUI yellowScoreText;
+    private int yellowScore = 0;
+    public static bool first = true;
+
+    public GameObject music;
+
     // Start is called before the first frame update
+    void Awake()
+    {
+        if(first)
+        {
+            PlayerPrefs.DeleteAll();
+            first = false;
+            music.SetActive(true);
+        }
+        else
+        {
+            blueScore = PlayerPrefs.GetInt("Blue Score", 0);
+            blueScoreText.text = blueScore.ToString();
+            greenScore = PlayerPrefs.GetInt("Green Score", 0);
+            greenScoreText.text = greenScore.ToString();
+            yellowScore = PlayerPrefs.GetInt("Yellow Score", 0);
+            yellowScoreText.text = yellowScore.ToString();
+        }
+    }
+
     void Start()
     {
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
@@ -52,6 +83,26 @@ public class MazeGeneratorInstant : MonoBehaviour
                 else //Otherwise, generate a regular maze cell
                 {
                     mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                    //Set Boundary Left 
+                    if(i == 0)
+                    {
+                        mazeGrid[i, j].BoundaryLeft();
+                    }
+                    //Set Boundary Right
+                    if(i == mazeWidth - 1)
+                    {
+                        mazeGrid[i, j].BoundaryRight();
+                    }
+                    //Set Boundary Front
+                    if(j == mazeDepth - 1)
+                    {
+                        mazeGrid[i, j].BoundaryFront();
+                    }
+                    //Set Boundary Back
+                    if(j == 0)
+                    {
+                        mazeGrid[i, j].BoundaryBack();
+                    }
                 }
                 
             }
@@ -60,11 +111,7 @@ public class MazeGeneratorInstant : MonoBehaviour
     }
     void Update()
     {
-        if (Input.GetKeyDown(KeyCode.Space))
-        {
-            MovePlayersToWaitPoint();
-            NewRound();
-        }
+
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -354,14 +401,37 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// <summary>
     /// Starts a new round when called
     /// </summary>
-    public void NewRound()
+    public void NewRound(int winner)
     {
-        foreach(MazeCell mc in mazeGrid)
+        switch(winner)
+        {
+            case 1:
+                blueScore++;
+                blueScoreText.text = blueScore.ToString();
+                PlayerPrefs.SetInt("Blue Score", blueScore);
+                break;
+            case 2:
+                greenScore++;
+                greenScoreText.text = greenScore.ToString();
+                PlayerPrefs.SetInt("Green Score", greenScore);
+                break;
+            case 3:
+                yellowScore++;
+                yellowScoreText.text = yellowScore.ToString();
+                PlayerPrefs.SetInt("Yellow Score", yellowScore);
+                break;
+            default:
+                break;
+        }
+
+        DontDestroyOnLoad(music);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+/*        foreach(MazeCell mc in mazeGrid)
         {
             mc.ActivateWalls();
         }
 
-        StartAtRandomEdgeCell(false);
+        StartAtRandomEdgeCell(false);*/
     }
 
     /// <summary>

@@ -94,7 +94,18 @@
                 {
                     "name": "",
                     "id": "cd69fc3e-e5de-4176-8704-a260a5a5b6ec",
-                    "path": "<Gamepad>/buttonSouth",
+                    "path": "<SwitchProControllerHID>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PowerUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "0f7c592d-8f7c-4b5b-be74-8ac8cf9a1e89",
+                    "path": "<Keyboard>/t",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
@@ -118,7 +129,7 @@
                     "initialStateCheck": true
                 },
                 {
-                    "name": "New action",
+                    "name": "PowerUp",
                     "type": "Button",
                     "id": "13063909-3c9c-43c0-a69c-71ea6034d209",
                     "expectedControlType": "Button",
@@ -142,11 +153,11 @@
                 {
                     "name": "",
                     "id": "3a38e3ec-fb6d-4086-9784-f0735e850ba9",
-                    "path": "",
+                    "path": "<DualShockGamepad>/buttonNorth",
                     "interactions": "",
                     "processors": "",
                     "groups": "",
-                    "action": "New action",
+                    "action": "PowerUp",
                     "isComposite": false,
                     "isPartOfComposite": false
                 },
@@ -219,6 +230,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "PowerUp",
+                    "type": "Button",
+                    "id": "fbbbe6d0-8cba-4be6-b36e-b3ef71cfa3ca",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -287,6 +307,17 @@
                     "action": "Movement",
                     "isComposite": false,
                     "isPartOfComposite": true
+                },
+                {
+                    "name": "",
+                    "id": "eec2e312-e6f7-40e0-a320-379071678a17",
+                    "path": "<XInputController>/buttonSouth",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "PowerUp",
+                    "isComposite": false,
+                    "isPartOfComposite": false
                 }
             ]
         },
