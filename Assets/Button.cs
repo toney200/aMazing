@@ -6,6 +6,7 @@ using UnityEngine.SceneManagement;
 
 public class Button : MonoBehaviour
 {
+    MusicMainMenu music;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,13 +23,14 @@ public class Button : MonoBehaviour
     {
         SceneManager.LoadScene("FirstDemo");
         Debug.Log("Button clicked");
+        music.musicSource.Stop();
 
     }
 
-    public void OnApplicationQuit()
+   /* public void OnApplicationQuit()
     {
        OnApplicationQuit();
-    }
+    }*/
 
     public void Rules()
     {
