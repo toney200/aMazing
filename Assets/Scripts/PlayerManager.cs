@@ -38,6 +38,7 @@ public class PlayerManager : MonoBehaviour
     private bool usingPowerUpLength = false;
     private float powerUpDuration;
     public TextMeshProUGUI powerUpLengthText;
+    public AudioSource[] SFXList;
     
 
     // Ghosting-specific variables
@@ -200,6 +201,7 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator SpeedBoosting(){
 
         SetPowerDurationTimer(speedBoostDuration);
+        SFXList[0].Play();
         if (gameObject.name.Contains("Blue Player"))
         {
             Debug.Log("Pressed blue speed");
@@ -243,6 +245,7 @@ public class PlayerManager : MonoBehaviour
      * as to enable power-up selection once more.
      */
     private IEnumerator Ghosting(){
+        SFXList[1].Play();
         Debug.Log("Ghosting");
         playerCollider.isTrigger = true;
         rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -264,6 +267,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SelfInvisibility()
     {
+        SFXList[2].Play();
         SetPowerDurationTimer(invisDuration);
         bodyMeshRenderer.enabled = false;
         yield return new WaitForSeconds(invisDuration);
