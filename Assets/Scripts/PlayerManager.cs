@@ -245,7 +245,7 @@ public class PlayerManager : MonoBehaviour
      * as to enable power-up selection once more.
      */
     private IEnumerator Ghosting(){
-        SFXList[0].Play();
+        SFXList[1].Play();
         Debug.Log("Ghosting");
         playerCollider.isTrigger = true;
         rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -267,7 +267,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SelfInvisibility()
     {
-        SFXList[0].Play();
+        SFXList[2].Play();
         SetPowerDurationTimer(invisDuration);
         bodyMeshRenderer.enabled = false;
         yield return new WaitForSeconds(invisDuration);
