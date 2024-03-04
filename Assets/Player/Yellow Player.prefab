@@ -962,8 +962,12 @@ MonoBehaviour:
   icon: {fileID: 7385121977178962729}
   bodyMeshRenderer: {fileID: 6191843027836095646}
   playerCollider: {fileID: 3900727882356564220}
+  otherPlayers:
+  - {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
+  - {fileID: 5965801675845295684, guid: d0c1c2d2debddb44c96050b2dc37dd68, type: 3}
   counter: 5
   playerScore: 0
+  startSpawn: {x: 0, y: 0, z: 0}
   hasPowerUp: 0
   powerSelect: 0
   powerUpTimer: 5

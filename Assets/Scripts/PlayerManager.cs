@@ -18,15 +18,12 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI textCounter;
     public Sprite[] powerIcons;
     public GameObject icon;
-    
-   
-
-
     private UnityEngine.UI.Image pwImage;
-    
+    private GameObject[] otherPlayers;
+
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
-    [SerializeField] private GameObject[] otherPlayers;
+
 
     public float counter = 5; //Power up timer
     private bool keepingPowerUp = false; //if player has power up and has not used it
@@ -35,7 +32,7 @@ public class PlayerManager : MonoBehaviour
    
 
     // Power-Up variables
-    private int powers = 3;             // represents the number of power-ups currently in the game
+    private int powers = 4;             // represents the number of power-ups currently in the game
     public bool hasPowerUp = false;        // denotes whether a player has a power-up ability
     public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
     public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
@@ -59,8 +56,7 @@ public class PlayerManager : MonoBehaviour
     private bool isInvisible = false;
     private float invisDuration = 6f;
 
-<<<<<<< Updated upstream
-=======
+
     // Freezing variables
     private float freezeDuration = 3f;
 
@@ -70,13 +66,14 @@ public class PlayerManager : MonoBehaviour
 
         startSpawn = transform.position;
     }
->>>>>>> Stashed changes
+
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>(); ;
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
         name = gameObject.name;
+        otherPlayers = GameObject.FindGameObjectsWithTag("Player");
 
         if (gameObject.name.Contains("Blue Player"))
         {
@@ -172,6 +169,9 @@ public class PlayerManager : MonoBehaviour
                         StartCoroutine(SelfInvisibility());
                         break;
 
+                    case 4: 
+                        StartCoroutine(Freeze()); 
+                        break;
                     default:
                         Debug.Log("powerSelect drew a value that does not have a corresponsing power-up");
                         break;
@@ -188,21 +188,7 @@ public class PlayerManager : MonoBehaviour
         
         powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers+1));
         pwImage.sprite = powerIcons[powerSelect - 1];
-        switch (powerSelect)
-        {
-            case 1:               
-                break;
-
-            case 2:              
-                break;
-
-            case 3:                            
-                break;
-
-            default:
-                Debug.Log("Death at powerSelect. See EnablePowerUp() :(");
-                break;
-        }
+        
         hasPowerUp = true;
         keepingPowerUp = true;
         return powerSelect;
@@ -309,20 +295,46 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator Freeze()
     {
         foreach(GameObject player in otherPlayers){ 
-            Rigidbody rigidbodies  = player.GetComponent<Rigidbody>();
 
-            rigidbodies.constraints = RigidbodyConstraints.FreezePosition;
+            if (player.name.Contains("Blue Player")  && !gameObject.name.Contains("Blue Player"))
+            {
+                player.GetComponent<PlayerMovement>().speed /= 2;
+            }
+            else if (player.name.Contains("Green Player") && !gameObject.name.Contains("Green Player"))
+            {
+                player.GetComponent<Player2Movement>().speed /= 2 ;
+            }
+            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Blue Player"))
+            {
+                player.GetComponent<Player3Movement>().speed /= 2;
+            }
+
         }
 
         yield return new WaitForSeconds(freezeDuration);
 
         foreach (GameObject player in otherPlayers)
         {
-            Rigidbody rigidbodies = player.GetComponent<Rigidbody>();
-
-            rigidbodies.constraints = RigidbodyConstraints.None;
-            rigidbodies.constraints = RigidbodyConstraints.FreezeRotation;
+            if (player.name.Contains("Blue Player") && !gameObject.name.Contains("Blue Player"))
+            {
+                player.GetComponent<PlayerMovement>().speed *= 2;
+            }
+            else if (player.name.Contains("Green Player") && !gameObject.name.Contains("Green Player"))
+            {
+                player.GetComponent<Player2Movement>().speed *= 2;
+            }
+            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Yellow Player"))
+            {
+                player.GetComponent<Player3Movement>().speed *= 2;
+            }
         }
+
+        hasPowerUp = false;
+        keepingPowerUp = false;
+        usingPowerUp = false;
+        counter = 5;
+
+        icon.SetActive(false);
     }
 
     private void SetPowerDurationTimer(float time)
