@@ -1877,14 +1877,11 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 9a2518a7c66cce546b743c391d9601c0, type: 3}
   - {fileID: 21300000, guid: 2e5a93f3724e62844a8e1a373428a6af, type: 3}
   - {fileID: 21300000, guid: 677ad25beb91e5f45b4b06de440aee3c, type: 3}
-  - {fileID: 21300000, guid: ebe8e2ce0e1f99c4e89b76dce25a2621, type: 3}
   - {fileID: 21300000, guid: 2efda778921981243a9a54528e45c24b, type: 3}
+  - {fileID: 21300000, guid: ebe8e2ce0e1f99c4e89b76dce25a2621, type: 3}
   icon: {fileID: 3147506198038882634}
   bodyMeshRenderer: {fileID: 4741934166163917621}
   playerCollider: {fileID: 5736532424305490701}
-  otherPlayers:
-  - {fileID: 5965801675845295684, guid: d0c1c2d2debddb44c96050b2dc37dd68, type: 3}
-  - {fileID: 4364621353782331464, guid: 09decdfbdcb068c4fbbaee6bdd3527b8, type: 3}
   counter: 5
   playerScore: 0
   startSpawn: {x: 0, y: 0, z: 0}
@@ -1892,6 +1889,9 @@ MonoBehaviour:
   powerSelect: 0
   powerUpTimer: 5
   powerUpLengthText: {fileID: 3928753185218726498}
+  isGhosting: 0
+  speedBoosting: 0
+  isInvisible: 0
 --- !u!1 &7204009026325358369
 GameObject:
   m_ObjectHideFlags: 0
