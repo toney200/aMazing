@@ -41,6 +41,9 @@ public class MazeGeneratorInstant : MonoBehaviour
     private int yellowScore = 0;
     public static bool first = true;
 
+    public GameObject music;
+    public AudioSource goalSFX;
+
     // Start is called before the first frame update
     void Awake()
     {
@@ -48,6 +51,7 @@ public class MazeGeneratorInstant : MonoBehaviour
         {
             PlayerPrefs.DeleteAll();
             first = false;
+            music.SetActive(true);
         }
         else
         {
@@ -421,6 +425,8 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
+        goalSFX.Play();
+        DontDestroyOnLoad(music);
         SceneManager.LoadScene(SceneManager.GetActiveScene().name);
 /*        foreach(MazeCell mc in mazeGrid)
         {

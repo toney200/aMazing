@@ -36,10 +36,11 @@ public class PlayerManager : MonoBehaviour
     public bool hasPowerUp = false;        // denotes whether a player has a power-up ability
     public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
     public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
-    private bool usingPowerUp = false;
+    private bool usingPowerUp;
     private bool usingPowerUpLength = false;
     private float powerUpDuration;
     public TextMeshProUGUI powerUpLengthText;
+    public AudioSource[] SFXList;
     
 
     // Ghosting-specific variables
@@ -90,7 +91,7 @@ public class PlayerManager : MonoBehaviour
 
     // Update is called once per frame
     void Update(){
-        if (!hasPowerUp) {
+        if (!hasPowerUp && !usingPowerUp) {
             if (counter <= 0)
             {
                 hasPowerUp=true;                
@@ -143,7 +144,7 @@ public class PlayerManager : MonoBehaviour
      */
     private void OnPowerUp()
     {
-        if(!usingPowerUp)
+        if(!usingPowerUp && hasPowerUp)
         {
             usingPowerUp = true;
             Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
@@ -216,6 +217,7 @@ public class PlayerManager : MonoBehaviour
     private IEnumerator SpeedBoosting(){
 
         SetPowerDurationTimer(speedBoostDuration);
+        SFXList[0].Play();
         if (gameObject.name.Contains("Blue Player"))
         {
             Debug.Log("Pressed blue speed");
@@ -259,6 +261,7 @@ public class PlayerManager : MonoBehaviour
      * as to enable power-up selection once more.
      */
     private IEnumerator Ghosting(){
+        SFXList[1].Play();
         Debug.Log("Ghosting");
         playerCollider.isTrigger = true;
         rb.constraints = RigidbodyConstraints.FreezePositionY;
@@ -280,6 +283,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator SelfInvisibility()
     {
+        SFXList[2].Play();
         SetPowerDurationTimer(invisDuration);
         bodyMeshRenderer.enabled = false;
         yield return new WaitForSeconds(invisDuration);
