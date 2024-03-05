@@ -18,19 +18,21 @@ public class PlayerManager : MonoBehaviour
     public TextMeshProUGUI textCounter;
     public Sprite[] powerIcons;
     public GameObject icon;
-
     private UnityEngine.UI.Image pwImage;
-    
+    private GameObject[] otherPlayers;
+
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
+
 
     public float counter = 5; //Power up timer
     private bool keepingPowerUp = false; //if player has power up and has not used it
     public int playerScore = 0; //the player's score
+    public Vector3 startSpawn;
    
 
     // Power-Up variables
-    private int powers = 3;             // represents the number of power-ups currently in the game
+    private int powers = 5;             // represents the number of power-ups currently in the game
     public bool hasPowerUp = false;        // denotes whether a player has a power-up ability
     public int powerSelect = 0;            // represents the power-up to be chosen at runtime 
     public float powerUpTimer = 5f;       // indicates the length of time between the expiry of one power-up and the acquisition of another
@@ -42,29 +44,35 @@ public class PlayerManager : MonoBehaviour
     
 
     // Ghosting-specific variables
-    //[SerializeField] private GameObject[] walls = {};
-    private bool isGhosting = false;
+    public bool isGhosting = false;
     private float ghostingDuration = 1f;
 
     // Speed-boost  variables
-    private bool speedBoosting = false;
+    public bool speedBoosting = false;
     private float speedBoostDuration = 5f;
     private float boostTimer = 0;
 
     // Self-invis variables
-    private bool isInvisible = false;
+    public bool isInvisible = false;
     private float invisDuration = 6f;
+
+    // Freezing variables
+    private float freezeDuration = 3f;
 
     private void Awake()
     {
         usingPowerUp = false;
+
+        startSpawn = transform.position;
     }
+
     // Start is called before the first frame update
     void Start(){
         rb = GetComponent<Rigidbody>();
         playerInput = GetComponent<PlayerInput>(); ;
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
         name = gameObject.name;
+        otherPlayers = GameObject.FindGameObjectsWithTag("Player");
 
         if (gameObject.name.Contains("Blue Player"))
         {
@@ -86,9 +94,10 @@ public class PlayerManager : MonoBehaviour
         if (!hasPowerUp && !usingPowerUp) {
             if (counter <= 0)
             {
-                hasPowerUp=true;
+                hasPowerUp=true;                
                 textCounter.text = "";
-                icon.SetActive(true);
+                icon.SetActive(true);    
+                   
             }
             else
             {
@@ -105,7 +114,7 @@ public class PlayerManager : MonoBehaviour
 
             if(usingPowerUpLength)
             {
-                if(powerUpDuration <= 0)
+                if(powerUpDuration <= 1)
                 {
                     usingPowerUpLength = false;
                     powerUpLengthText.text = "";
@@ -141,6 +150,7 @@ public class PlayerManager : MonoBehaviour
             Debug.Log("Power-Up button pressed; hasPowerUp = " + hasPowerUp);
             if (hasPowerUp)
             {
+                   
                 switch (powerSelect)
                 {
                     case 1:
@@ -158,6 +168,14 @@ public class PlayerManager : MonoBehaviour
                         StartCoroutine(SelfInvisibility());
                         break;
 
+                    case 4: 
+                        StartCoroutine(Freeze()); 
+                        break;
+
+                    case 5:
+                        Rewind();
+                        break;
+
                     default:
                         Debug.Log("powerSelect drew a value that does not have a corresponsing power-up");
                         break;
@@ -171,27 +189,25 @@ public class PlayerManager : MonoBehaviour
      * Returns a random integer value representing the power to be selected. Sets the corresponding power-up boolean to true to enable to corresponding power-up methods.
      */
     private int EnablePowerUp(){
-        
-        powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers+1));
+
+        int[] powersDistribution = { 5 };
+        int localPowerSelect = UnityEngine.Random.Range(0, powersDistribution.Length);
+        powerSelect = powersDistribution[localPowerSelect];
+
         pwImage.sprite = powerIcons[powerSelect - 1];
-        switch (powerSelect)
-        {
-            case 1:               
-                break;
-
-            case 2:              
-                break;
-
-            case 3:                            
-                break;
-
-            default:
-                Debug.Log("Death at powerSelect. See EnablePowerUp() :(");
-                break;
-        }
         hasPowerUp = true;
         keepingPowerUp = true;
         return powerSelect;
+
+
+        /*
+        powerSelect = Mathf.RoundToInt(UnityEngine.Random.Range(1, powers+1));
+        pwImage.sprite = powerIcons[powerSelect - 1];
+        
+        hasPowerUp = true;
+        keepingPowerUp = true;
+        return powerSelect;
+        */
     }
     
     /*
@@ -279,6 +295,70 @@ public class PlayerManager : MonoBehaviour
         counter = 5;
         icon.SetActive(false);
     }
+
+    internal void Rewind()
+    {
+        SFXList[4].Play();
+        foreach (GameObject player in otherPlayers)
+        {
+            player.transform.position = player.GetComponent<PlayerManager>().startSpawn;
+        }
+
+        hasPowerUp = false;
+        keepingPowerUp = false;
+        usingPowerUp = false;
+        counter = 5;
+
+        icon.SetActive(false);
+    }
+
+
+    /*
+     * Accesses each player via the otherPlayers[] array and halves their speed (excluding the player that activated this power-up)
+     */
+    private IEnumerator Freeze()
+    {
+        SFXList[3].Play();
+        SetPowerDurationTimer(freezeDuration);
+        foreach(GameObject player in otherPlayers){ 
+
+            if (player.name.Contains("Blue Player")  && !gameObject.name.Contains("Blue Player"))
+            {
+                if (!player.GetComponent<PlayerManager>().isInvisible) {
+                    player.GetComponent<PlayerMovement>().speed /= 2;
+                    yield return new WaitForSeconds(freezeDuration);
+                    player.GetComponent<PlayerMovement>().speed *= 2;
+                }
+            }
+            else if (player.name.Contains("Green Player") && !gameObject.name.Contains("Green Player"))
+            {
+                if (!player.GetComponent<PlayerManager>().isInvisible)
+                {
+                    player.GetComponent<Player2Movement>().speed /= 2;
+                    yield return new WaitForSeconds(freezeDuration);
+                    player.GetComponent<Player2Movement>().speed *= 2;
+                }
+            }
+            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Blue Player"))
+            {
+                if (!player.GetComponent<PlayerManager>().isInvisible)
+                {
+                    player.GetComponent<Player3Movement>().speed /= 2;
+                    yield return new WaitForSeconds(freezeDuration);
+                    player.GetComponent <Player3Movement>().speed *= 2;
+                }
+            }
+
+        }
+       
+        hasPowerUp = false;
+        keepingPowerUp = false;
+        usingPowerUp = false;
+        counter = 5;
+
+        icon.SetActive(false);
+    }
+
 
     private void SetPowerDurationTimer(float time)
     { 
