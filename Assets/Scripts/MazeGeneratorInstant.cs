@@ -425,9 +425,17 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
-        goalSFX.Play();
-        DontDestroyOnLoad(music);
-        SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        if(blueScore == 7 || greenScore == 7 || yellowScore == 7) {
+            first = true;
+            SceneManager.LoadScene("Victory");
+        }
+        else
+        {
+            goalSFX.Play();
+            DontDestroyOnLoad(music);
+            SceneManager.LoadScene(SceneManager.GetActiveScene().name);
+        }
+        
 /*        foreach(MazeCell mc in mazeGrid)
         {
             mc.ActivateWalls();

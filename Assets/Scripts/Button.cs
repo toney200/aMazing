@@ -45,4 +45,9 @@ public class Button : MonoBehaviour
     {
         SceneManager.LoadScene("Main Menu");
     }
+
+    public void OnClick()
+    {
+       Application.Quit();  
+    }
 }
