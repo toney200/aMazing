@@ -114,7 +114,7 @@ public class PlayerManager : MonoBehaviour
 
             if(usingPowerUpLength)
             {
-                if(powerUpDuration <= 0)
+                if(powerUpDuration <= 1)
                 {
                     usingPowerUpLength = false;
                     powerUpLengthText.text = "";
@@ -190,7 +190,7 @@ public class PlayerManager : MonoBehaviour
      */
     private int EnablePowerUp(){
 
-        int[] powersDistribution = { 1, 1, 1, 1, 1, 1, 2, 2, 3, 3, 3, 4, 4, 4, 5 };
+        int[] powersDistribution = { 5 };
         int localPowerSelect = UnityEngine.Random.Range(0, powersDistribution.Length);
         powerSelect = powersDistribution[localPowerSelect];
 
@@ -298,8 +298,8 @@ public class PlayerManager : MonoBehaviour
 
     internal void Rewind()
     {
-
-        foreach(GameObject player in otherPlayers)
+        SFXList[4].Play();
+        foreach (GameObject player in otherPlayers)
         {
             player.transform.position = player.GetComponent<PlayerManager>().startSpawn;
         }
@@ -318,6 +318,7 @@ public class PlayerManager : MonoBehaviour
      */
     private IEnumerator Freeze()
     {
+        SFXList[3].Play();
         SetPowerDurationTimer(freezeDuration);
         foreach(GameObject player in otherPlayers){ 
 
@@ -349,9 +350,6 @@ public class PlayerManager : MonoBehaviour
             }
 
         }
-
-        yield return new WaitForSeconds(freezeDuration);
-
        
         hasPowerUp = false;
         keepingPowerUp = false;
