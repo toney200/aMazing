@@ -425,16 +425,19 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
-        if(blueScore == 7 || greenScore == 7 || yellowScore == 7) {
+        if(blueScore == 5 || greenScore == 5 || yellowScore == 5) {
             first = true;
             SceneManager.LoadScene("Victory");
         }
         else
         {
             goalSFX.Play();
+            DontDestroyOnLoad(goalSFX);
             DontDestroyOnLoad(music);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
+        
+
         
 /*        foreach(MazeCell mc in mazeGrid)
         {

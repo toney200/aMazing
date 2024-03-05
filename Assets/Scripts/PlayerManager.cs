@@ -114,7 +114,7 @@ public class PlayerManager : MonoBehaviour
 
             if(usingPowerUpLength)
             {
-                if(powerUpDuration <= 1)
+                if(powerUpDuration <= 0)
                 {
                     usingPowerUpLength = false;
                     powerUpLengthText.text = "";
@@ -324,33 +324,50 @@ public class PlayerManager : MonoBehaviour
 
             if (player.name.Contains("Blue Player")  && !gameObject.name.Contains("Blue Player"))
             {
-                if (!player.GetComponent<PlayerManager>().isInvisible) {
+
                     player.GetComponent<PlayerMovement>().speed /= 2;
-                    yield return new WaitForSeconds(freezeDuration);
-                    player.GetComponent<PlayerMovement>().speed *= 2;
-                }
+
             }
             else if (player.name.Contains("Green Player") && !gameObject.name.Contains("Green Player"))
             {
-                if (!player.GetComponent<PlayerManager>().isInvisible)
-                {
+
                     player.GetComponent<Player2Movement>().speed /= 2;
-                    yield return new WaitForSeconds(freezeDuration);
-                    player.GetComponent<Player2Movement>().speed *= 2;
-                }
+
             }
-            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Blue Player"))
+            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Yellow Player"))
             {
-                if (!player.GetComponent<PlayerManager>().isInvisible)
-                {
+
                     player.GetComponent<Player3Movement>().speed /= 2;
-                    yield return new WaitForSeconds(freezeDuration);
-                    player.GetComponent <Player3Movement>().speed *= 2;
-                }
+
             }
 
         }
-       
+
+        yield return new WaitForSeconds(freezeDuration);
+
+        foreach (GameObject player in otherPlayers)
+        {
+
+            if (player.name.Contains("Blue Player") && !gameObject.name.Contains("Blue Player"))
+            {
+
+                    player.GetComponent<PlayerMovement>().speed *= 2;
+
+            }
+            else if (player.name.Contains("Green Player") && !gameObject.name.Contains("Green Player"))
+            {
+
+                    player.GetComponent<Player2Movement>().speed *= 2;
+
+            }
+            else if (player.name.Contains("Yellow Player") && !gameObject.name.Contains("Yellow Player"))
+            {
+
+                player.GetComponent<Player3Movement>().speed *= 2;
+
+            }
+
+        }
         hasPowerUp = false;
         keepingPowerUp = false;
         usingPowerUp = false;

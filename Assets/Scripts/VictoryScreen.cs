@@ -14,17 +14,17 @@ public class VictoryScreen : MonoBehaviour
     {
         blueScore = PlayerPrefs.GetInt("Blue Score", 0);
         greenScore = PlayerPrefs.GetInt("Green Score", 0);
-        yellowScore = PlayerPrefs.GetInt("Blue Score", 0);
+        yellowScore = PlayerPrefs.GetInt("Yellow Score", 0);
 
-        if(blueScore == 7) { 
+        if(blueScore == 5) { 
             
             gameObjects[0].SetActive(true);
         }
-        else if(greenScore == 7)
+        else if(greenScore == 5)
         {
             gameObjects[1].SetActive(true);
         }
-        else if (yellowScore == 7)
+        else if (yellowScore == 5)
         {
             gameObjects[2].SetActive(true);
         }

@@ -116,7 +116,7 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""cd69fc3e-e5de-4176-8704-a260a5a5b6ec"",
-                    ""path"": ""<SwitchProControllerHID>/buttonSouth"",
+                    ""path"": ""<SwitchProControllerHID>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
