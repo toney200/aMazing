@@ -333,7 +333,7 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""eec2e312-e6f7-40e0-a320-379071678a17"",
-                    ""path"": ""<XInputController>/buttonSouth"",
+                    ""path"": ""<XInputController>/buttonNorth"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
