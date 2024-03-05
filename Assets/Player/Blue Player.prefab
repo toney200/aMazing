@@ -2383,7 +2383,8 @@ PrefabInstance:
       propertyPath: m_Name
       value: Power-Up Controller
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3939053654296877392, guid: a9deee2b1f205854dbd0a1605c0aa96d, type: 3}
     m_RemovedGameObjects:
     - {fileID: 995016459097448244, guid: a9deee2b1f205854dbd0a1605c0aa96d, type: 3}
     - {fileID: 8634356081414404667, guid: a9deee2b1f205854dbd0a1605c0aa96d, type: 3}
