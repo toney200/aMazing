@@ -269,6 +269,7 @@ public class PlayerManager : MonoBehaviour
         yield return new WaitForSeconds(ghostingDuration);
         isGhosting = false;
         playerCollider.isTrigger = false;
+        OutOfBounds();
         rb.constraints = RigidbodyConstraints.None;
         rb.constraints = RigidbodyConstraints.FreezeRotation;
         counter = 5;
@@ -276,6 +277,31 @@ public class PlayerManager : MonoBehaviour
         usingPowerUp = false;
         keepingPowerUp = false;
         icon.SetActive(false);
+    }
+
+    private void OutOfBounds()
+    {
+        Vector3 playerPositionTemp = gameObject.transform.position;
+        if(gameObject.transform.position.x <= -0.9f)
+        {
+            gameObject.transform.position = new Vector3(0f, playerPositionTemp.y, playerPositionTemp.z);
+            playerPositionTemp = gameObject.transform.position;
+        } else if(gameObject.transform.position.x >= 19.5f)
+        {
+            gameObject.transform.position = new Vector3(18.6f, playerPositionTemp.y, playerPositionTemp.z);
+            playerPositionTemp = gameObject.transform.position;
+        }
+
+        if (gameObject.transform.position.z <= -0.9f)
+        {
+            gameObject.transform.position = new Vector3(playerPositionTemp.x, playerPositionTemp.y, 0);
+            playerPositionTemp = gameObject.transform.position;
+        }
+        else if (gameObject.transform.position.z >= 19.6f)
+        {
+            gameObject.transform.position = new Vector3(playerPositionTemp.x, playerPositionTemp.y, 19f);
+            playerPositionTemp = gameObject.transform.position;
+        }
     }
 
     /*
