@@ -22,7 +22,6 @@ public class Button : MonoBehaviour
     public void StartButton()
     {
         SceneManager.LoadScene("FirstDemo");
-        Debug.Log("Button clicked");
         music.musicSource.Stop();
 
     }
@@ -35,5 +34,15 @@ public class Button : MonoBehaviour
     public void Rules()
     {
         
+    }
+
+    public void PowerButton()
+    {
+        SceneManager.LoadScene("PowerUps Page");
+    }
+
+    public void BackButton()
+    {
+        SceneManager.LoadScene("Main Menu");
     }
 }

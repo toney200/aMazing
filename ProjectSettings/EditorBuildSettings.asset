@@ -11,5 +11,8 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/FirstDemo.unity
     guid: 44de7b5694217ed418ce40a1f5f2b49d
+  - enabled: 1
+    path: Assets/Scenes/PowerUps Page.unity
+    guid: 9eb32d6c5b6bb004ab3a2a69ea0cd9ad
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e6e325ec499046e47b431cf21deb940c, type: 2}
