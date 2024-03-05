@@ -190,7 +190,7 @@ public class PlayerManager : MonoBehaviour
      */
     private int EnablePowerUp(){
 
-        int[] powersDistribution = { 5 };
+        int[] powersDistribution = { 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5 };
         int localPowerSelect = UnityEngine.Random.Range(0, powersDistribution.Length);
         powerSelect = powersDistribution[localPowerSelect];
 
