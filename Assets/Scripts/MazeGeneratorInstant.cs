@@ -424,7 +424,7 @@ public class MazeGeneratorInstant : MonoBehaviour
             default:
                 break;
         }
-
+        //Cahnge to 5
         if(blueScore == 5 || greenScore == 5 || yellowScore == 5) {
             first = true;
             SceneManager.LoadScene("Victory");
