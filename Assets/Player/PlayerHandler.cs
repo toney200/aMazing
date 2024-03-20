@@ -127,7 +127,7 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                 {
                     ""name"": """",
                     ""id"": ""0f7c592d-8f7c-4b5b-be74-8ac8cf9a1e89"",
-                    ""path"": ""<Keyboard>/t"",
+                    ""path"": ""<Keyboard>/space"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
@@ -176,6 +176,17 @@ public partial class @PlayerHandler: IInputActionCollection2, IDisposable
                     ""name"": """",
                     ""id"": ""3a38e3ec-fb6d-4086-9784-f0735e850ba9"",
                     ""path"": ""<DualShockGamepad>/buttonNorth"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""PowerUp"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""d043d9b9-2fc1-44be-bd02-ef4499ce85b3"",
+                    ""path"": ""<Keyboard>/enter"",
                     ""interactions"": """",
                     ""processors"": """",
                     ""groups"": """",
