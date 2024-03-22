@@ -37,6 +37,7 @@ public class SingleplayerGenerator : MonoBehaviour
 
     public TextMeshProUGUI blueScoreText;
     private int blueScore = 0;
+
     public static bool first = true;
 
     public GameObject music;
@@ -391,21 +392,11 @@ public class SingleplayerGenerator : MonoBehaviour
                 blueScoreText.text = blueScore.ToString();
                 PlayerPrefs.SetInt("Blue Score", blueScore);
                 break;
-            case 2:
-                greenScore++;
-                greenScoreText.text = greenScore.ToString();
-                PlayerPrefs.SetInt("Green Score", greenScore);
-                break;
-            case 3:
-                yellowScore++;
-                yellowScoreText.text = yellowScore.ToString();
-                PlayerPrefs.SetInt("Yellow Score", yellowScore);
-                break;
             default:
                 break;
         }
 
-        if (blueScore == 5 || greenScore == 5 || yellowScore == 5)
+        if (blueScore == 5)
         {
             first = true;
             SceneManager.LoadScene("Victory");
