@@ -51,6 +51,54 @@ public class MazeCell : MonoBehaviour
         backWall.SetActive(false);
     }
 
+    public bool IsActiveLeftWall()
+    {
+        if(leftWall.activeInHierarchy == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsActiveRightWall()
+    {
+        if (rightWall.activeInHierarchy == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsActiveFrontWall()
+    {
+        if (frontWall.activeInHierarchy == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public bool IsActiveBackWall()
+    {
+        if (backWall.activeInHierarchy == true)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
     public void ActivateWalls()
     {
         leftWall.SetActive(true);

@@ -6,7 +6,7 @@ using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine.SceneManagement;
 
-public class MazeGeneratorInstant : MonoBehaviour
+public class SingleplayerGenerator : MonoBehaviour
 {
     [SerializeField]
     private MazeCell mazeCellPrefab;
@@ -33,6 +33,8 @@ public class MazeGeneratorInstant : MonoBehaviour
 
     public GameObject[] playerPrefabList;
 
+    private int[,] cellValue;
+
     public TextMeshProUGUI blueScoreText;
     private int blueScore = 0;
     public TextMeshProUGUI greenScoreText;
@@ -44,10 +46,13 @@ public class MazeGeneratorInstant : MonoBehaviour
     public GameObject music;
     public AudioSource goalSFX;
 
+    private int biggestValue;
+    private int[] furthestCell;
+
     // Start is called before the first frame update
     void Awake()
     {
-        if(first)
+        if (first)
         {
             PlayerPrefs.DeleteAll();
             first = false;
@@ -67,48 +72,24 @@ public class MazeGeneratorInstant : MonoBehaviour
     void Start()
     {
         mazeGrid = new MazeCell[mazeWidth, mazeDepth];
+        cellValue = new int[mazeWidth, mazeDepth];
+        furthestCell = new int[2];
 
         for (int i = 0; i < mazeWidth; i++)
         {
             for (int j = 0; j < mazeDepth; j++)
             {
-                //If the cell is in the middle of the maze, generate an instance of the maze goal prefab
-                //This condition is hardcoded for a maze of equal dimensions and there are more than 1 cells in the maze
-                if((i == ((mazeWidth - 1) / 2) && j == ((mazeDepth - 1) / 2)) || //Top Left
-                    (i == ((mazeWidth - 1) / 2) + 1 && j == ((mazeDepth - 1) / 2)) || //Top Right
-                    (i == ((mazeWidth - 1) / 2) && j == ((mazeDepth - 1) / 2) + 1) || //Bottom Left
-                    (i == ((mazeWidth - 1) / 2) + 1 && j == ((mazeDepth - 1) / 2) + 1)) // Bottom Right
-                {
-                    mazeGrid[i, j] = Instantiate(mazeGoalPrefab, new Vector3(i, 0, j), Quaternion.identity, gameObject.transform);
-                }
-                else //Otherwise, generate a regular maze cell
-                {
-                    mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
-                    //Set Boundary Left 
-                    if(i == 0)
-                    {
-                        mazeGrid[i, j].BoundaryLeft();
-                    }
-                    //Set Boundary Right
-                    if(i == mazeWidth - 1)
-                    {
-                        mazeGrid[i, j].BoundaryRight();
-                    }
-                    //Set Boundary Front
-                    if(j == mazeDepth - 1)
-                    {
-                        mazeGrid[i, j].BoundaryFront();
-                    }
-                    //Set Boundary Back
-                    if(j == 0)
-                    {
-                        mazeGrid[i, j].BoundaryBack();
-                    }
-                }
-                
+                mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
+                cellValue[i, j] = 0;
             }
         }
         StartAtRandomEdgeCell(true);
+        MazeCell goal = Instantiate(mazeGoalPrefab, new Vector3(furthestCell[0], 50, furthestCell[1]), Quaternion.identity);
+        MazeCell toDestroy = mazeGrid[furthestCell[0], furthestCell[1]];
+        CopyWalls(toDestroy, goal);
+        goal.transform.position = new Vector3(furthestCell[0], 0, furthestCell[1]);
+        mazeGrid[furthestCell[0], furthestCell[1]] = goal;
+        Destroy(toDestroy);
     }
     void Update()
     {
@@ -128,6 +109,13 @@ public class MazeGeneratorInstant : MonoBehaviour
 
             if (nextCell != null)
             {
+                cellValue[(int)nextCell.transform.position.x, (int)nextCell.transform.position.z] = cellValue[(int)currentCell.transform.position.x, (int)currentCell.transform.position.z] + 1;
+                if(cellValue[(int)nextCell.transform.position.x, (int)nextCell.transform.position.z] > biggestValue)
+                {
+                    biggestValue = cellValue[(int)nextCell.transform.position.x, (int)nextCell.transform.position.z];
+                    furthestCell[0] = (int)nextCell.transform.position.x;
+                    furthestCell[1] = (int)nextCell.transform.position.z;
+                }
                 GenerateMaze(currentCell, nextCell);
             }
         } while (nextCell != null);
@@ -258,6 +246,7 @@ public class MazeGeneratorInstant : MonoBehaviour
                 xStartPoint = edgeChooser % 2 == 0 ? 0 : mazeWidth - 1;
                 zStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeDepth - 1)));
 
+                cellValue[xStartPoint, zStartPoint] = 0;
                 GenerateMaze(null, mazeGrid[xStartPoint, zStartPoint]);
                 break;
             case 2:
@@ -265,6 +254,7 @@ public class MazeGeneratorInstant : MonoBehaviour
                 zStartPoint = edgeChooser % 2 == 0 ? 0 : mazeDepth - 1;
                 xStartPoint = Mathf.RoundToInt(Random.Range(0.0f, (mazeWidth - 1)));
 
+                cellValue[xStartPoint, zStartPoint] = 0;
                 GenerateMaze(null, mazeGrid[xStartPoint, zStartPoint]);
                 break;
             default:
@@ -273,7 +263,7 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
-        if(isFirstRound)
+        if (isFirstRound)
         {
             SpawnPlayers(xStartPoint, zStartPoint);  //DO NOT PUT IN Start(), coordinates from this method are needed
         }
@@ -288,17 +278,17 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// </summary>
     /// <param name="xStart"></param>
     /// <param name="zStart"></param>
-    private void SpawnPlayers(int xStart,  int zStart)
+    private void SpawnPlayers(int xStart, int zStart)
     {
         int edge = CheckEdge(xStart, zStart);
         int distance = GetDistance(xStart, zStart, edge);
 
         for (int i = 0; i < numberOfPlayers; i++)
         {
-            if(i == 0)
+            if (i == 0)
             {
                 Instantiate(playerPrefabList[i], new Vector3((float)xStart, 0.35f, (float)zStart), Quaternion.identity, playersParent.transform);
-                if(edge == 3)
+                if (edge == 3)
                 {
                     edge = 0;
                 }
@@ -349,7 +339,7 @@ public class MazeGeneratorInstant : MonoBehaviour
     private int CheckEdge(int x, int z)
     {
         //Checks if it's the front edge, denoted by 0
-        if((x >= 0 && x <= mazeWidth - 2) && z == 0)
+        if ((x >= 0 && x <= mazeWidth - 2) && z == 0)
         {
             return 0;
         }
@@ -404,7 +394,7 @@ public class MazeGeneratorInstant : MonoBehaviour
     /// </summary>
     public void NewRound(int winner)
     {
-        switch(winner)
+        switch (winner)
         {
             case 1:
                 blueScore++;
@@ -425,7 +415,8 @@ public class MazeGeneratorInstant : MonoBehaviour
                 break;
         }
 
-        if(blueScore == 5 || greenScore == 5 || yellowScore == 5) {
+        if (blueScore == 5 || greenScore == 5 || yellowScore == 5)
+        {
             first = true;
             SceneManager.LoadScene("Victory");
         }
@@ -436,15 +427,15 @@ public class MazeGeneratorInstant : MonoBehaviour
             DontDestroyOnLoad(music);
             SceneManager.LoadScene(SceneManager.GetActiveScene().name);
         }
-        
 
-        
-/*        foreach(MazeCell mc in mazeGrid)
-        {
-            mc.ActivateWalls();
-        }
 
-        StartAtRandomEdgeCell(false);*/
+
+        /*        foreach(MazeCell mc in mazeGrid)
+                {
+                    mc.ActivateWalls();
+                }
+
+                StartAtRandomEdgeCell(false);*/
     }
 
     /// <summary>
@@ -504,14 +495,26 @@ public class MazeGeneratorInstant : MonoBehaviour
         }
     }
 
-    /// <summary>
-    /// Moves all players outside the camera
-    /// </summary>
-    private void MovePlayersToWaitPoint()
+    private void CopyWalls(MazeCell toBeReplaced, MazeCell goal)
     {
-        for(int i = 0; i < numberOfPlayers; i++)
+        if(toBeReplaced.IsActiveLeftWall() == true)
         {
-            playersParent.transform.GetChild(i).gameObject.transform.position = new Vector3(0.0f, 0.0f, -100.0f);
+            goal.ClearLeftWall();
+        }
+
+        if (toBeReplaced.IsActiveRightWall() == true)
+        {
+            goal.ClearRightWall();
+        }
+
+        if (toBeReplaced.IsActiveFrontWall() == true)
+        {
+            goal.ClearFrontWall();
+        }
+
+        if (toBeReplaced.IsActiveBackWall() == true)
+        {
+            goal.ClearBackWall();
         }
     }
 }
