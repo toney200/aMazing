@@ -53,50 +53,22 @@ public class MazeCell : MonoBehaviour
 
     public bool IsActiveLeftWall()
     {
-        if(leftWall.activeInHierarchy == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return leftWall.activeInHierarchy;
     }
 
     public bool IsActiveRightWall()
     {
-        if (rightWall.activeInHierarchy == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return rightWall.activeInHierarchy;
     }
 
     public bool IsActiveFrontWall()
     {
-        if (frontWall.activeInHierarchy == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return frontWall.activeInHierarchy;
     }
 
     public bool IsActiveBackWall()
     {
-        if (backWall.activeInHierarchy == true)
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        return backWall.activeInHierarchy;
     }
 
     public void ActivateWalls()
@@ -128,5 +100,10 @@ public class MazeCell : MonoBehaviour
     public void BoundaryRight()
     {
         rightWall.tag = "Boundary";
+    }
+
+    public void Remove()
+    {
+        Destroy(gameObject);
     }
 }

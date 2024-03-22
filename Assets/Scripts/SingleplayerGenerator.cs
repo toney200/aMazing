@@ -37,10 +37,6 @@ public class SingleplayerGenerator : MonoBehaviour
 
     public TextMeshProUGUI blueScoreText;
     private int blueScore = 0;
-    public TextMeshProUGUI greenScoreText;
-    private int greenScore = 0;
-    public TextMeshProUGUI yellowScoreText;
-    private int yellowScore = 0;
     public static bool first = true;
 
     public GameObject music;
@@ -62,10 +58,6 @@ public class SingleplayerGenerator : MonoBehaviour
         {
             blueScore = PlayerPrefs.GetInt("Blue Score", 0);
             blueScoreText.text = blueScore.ToString();
-            greenScore = PlayerPrefs.GetInt("Green Score", 0);
-            greenScoreText.text = greenScore.ToString();
-            yellowScore = PlayerPrefs.GetInt("Yellow Score", 0);
-            yellowScoreText.text = yellowScore.ToString();
         }
     }
 
@@ -84,16 +76,14 @@ public class SingleplayerGenerator : MonoBehaviour
             }
         }
         StartAtRandomEdgeCell(true);
-        MazeCell goal = Instantiate(mazeGoalPrefab, new Vector3(furthestCell[0], 50, furthestCell[1]), Quaternion.identity);
+
+        //Generating the goal that would take the player the longest to get to
+        MazeCell goal = Instantiate(mazeGoalPrefab, new Vector3(furthestCell[0], 50, furthestCell[1]), Quaternion.identity, gameObject.transform);
         MazeCell toDestroy = mazeGrid[furthestCell[0], furthestCell[1]];
         CopyWalls(toDestroy, goal);
         goal.transform.position = new Vector3(furthestCell[0], 0, furthestCell[1]);
         mazeGrid[furthestCell[0], furthestCell[1]] = goal;
-        Destroy(toDestroy);
-    }
-    void Update()
-    {
-
+        toDestroy.Remove();
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -497,22 +487,22 @@ public class SingleplayerGenerator : MonoBehaviour
 
     private void CopyWalls(MazeCell toBeReplaced, MazeCell goal)
     {
-        if(toBeReplaced.IsActiveLeftWall() == true)
+        if(toBeReplaced.IsActiveLeftWall() == false)
         {
             goal.ClearLeftWall();
         }
 
-        if (toBeReplaced.IsActiveRightWall() == true)
+        if (toBeReplaced.IsActiveRightWall() == false)
         {
             goal.ClearRightWall();
         }
 
-        if (toBeReplaced.IsActiveFrontWall() == true)
+        if (toBeReplaced.IsActiveFrontWall() == false)
         {
             goal.ClearFrontWall();
         }
 
-        if (toBeReplaced.IsActiveBackWall() == true)
+        if (toBeReplaced.IsActiveBackWall() == false)
         {
             goal.ClearBackWall();
         }
