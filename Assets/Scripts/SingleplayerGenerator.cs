@@ -5,6 +5,7 @@ using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
 using UnityEngine.SceneManagement;
+using UnityEditor;
 
 public class SingleplayerGenerator : MonoBehaviour
 {
@@ -544,7 +545,39 @@ public class SingleplayerGenerator : MonoBehaviour
         SortedSet<(double, Vector2)> openList = new SortedSet<(double,Vector2)>();
         Comparer<(double, Vector2)>.Create((a, b) => a.Item1.CompareTo(b.Item1));
 
+        openList.Add((0.0, new Vector2(cellStart.transform.position.x, cellStart.transform.position.z)));
 
+        bool found = false;
+
+        while (openList.Count > 0)
+        {
+            (double f, Vector2 v) p = openList.Min;
+            openList.Remove(p);
+
+            x = (int) p.v.x;
+            z = (int) p.v.y;
+            visitedList[x, z] = true;
+            MazeCell currentCell = mazeGrid[x, z];
+
+            IEnumerable<MazeCell> neighbours = GetConnectedCells(mazeGrid[x, z]);
+            foreach(MazeCell cell in neighbours)
+            {
+                int newX = (int) cell.transform.position.x;
+                int newY = (int)cell.transform.position.z;
+                if (cell.tag == "Goal")
+                {
+                    found = true;
+                    cellInfo[newX, newY].parentCell = currentCell;
+                }
+
+                if (!visitedList[newX, newY])
+                {
+                    double gNew = cellInfo[x, z].g + 1.0;
+                    //double hNew = CalculateHValue(newX, newY, dest);
+                    //double fNew = gNew + hNew;
+                }
+            }
+        }
     }
 
     private IEnumerable<MazeCell> GetConnectedCells(MazeCell currentCell)
