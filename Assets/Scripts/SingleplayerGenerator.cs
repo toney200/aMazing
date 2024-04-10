@@ -8,6 +8,24 @@ using UnityEngine.SceneManagement;
 
 public class SingleplayerGenerator : MonoBehaviour
 {
+    public struct Pair
+    {
+        public int first, second;
+
+        public Pair(int x, int y)
+        {
+            first = x;
+            second = y;
+        }
+    }
+
+    public struct CellForPath
+    {
+        MazeCell cell;
+        public MazeCell parentCell;
+        public double f, g, h;
+    }
+
     [SerializeField]
     private MazeCell mazeCellPrefab;
 
@@ -496,6 +514,82 @@ public class SingleplayerGenerator : MonoBehaviour
         if (toBeReplaced.IsActiveBackWall() == false)
         {
             goal.ClearBackWall();
+        }
+    }
+
+    public void FindPathToGoal(MazeCell cellStart)
+    {
+        var connectedCells = GetConnectedCells(cellStart);
+        bool[,] visitedList = new bool[mazeWidth, mazeDepth];
+        CellForPath[,] cellInfo = new CellForPath[mazeWidth, mazeDepth];
+
+        for (int i = 0; i < mazeWidth; i++)
+        {
+            for (int j = 0; j < mazeDepth; j++)
+            {
+                cellInfo[i, j].f = double.MaxValue;
+                cellInfo[i, j].g = double.MaxValue;
+                cellInfo[i, j].h = double.MaxValue;
+                cellInfo[i, j].parentCell = null;
+            }
+        }
+
+        int x = (int)cellStart.transform.position.x;
+        int z = (int) cellStart.transform.position.z;
+        cellInfo[x, z].f = 0.0;
+        cellInfo[x, z].g = 0.0;
+        cellInfo[x, z].h = 0.0;
+        cellInfo[x, z].parentCell = cellStart;
+
+        SortedSet<(double, Vector2)> openList = new SortedSet<(double,Vector2)>();
+        Comparer<(double, Vector2)>.Create((a, b) => a.Item1.CompareTo(b.Item1));
+
+
+    }
+
+    private IEnumerable<MazeCell> GetConnectedCells(MazeCell currentCell)
+    {
+        int x = (int)currentCell.transform.position.x;
+        int z = (int)currentCell.transform.position.z;
+
+        //Check the cell to the right
+        if (x + 1 < mazeWidth)
+        {
+            var rightCell = mazeGrid[x + 1, z];
+            if (rightCell.IsActiveLeftWall() == false && currentCell.IsActiveRightWall() == false)
+            {
+                yield return rightCell;
+            }
+        }
+
+        //Check the cell to the left
+        if (x - 1 >= 0)
+        {
+            var leftCell = mazeGrid[x - 1, z];
+            if (leftCell.IsActiveRightWall() == false && currentCell.IsActiveLeftWall() == false)
+            {
+                yield return leftCell;
+            }
+        }
+
+        //Check the cell to the front
+        if (z - 1 >= 0)
+        {
+            var frontCell = mazeGrid[x, z - 1];
+            if (frontCell.IsActiveBackWall() == false && currentCell.IsActiveFrontWall() == false)
+            {
+                yield return frontCell;
+            }
+        }
+
+        //Check the cell to the back
+        if (z + 1 < mazeDepth)
+        {
+            var backCell = mazeGrid[x, z + 1];
+            if (backCell.IsActiveFrontWall() == false && currentCell.IsActiveBackWall() == false)
+            {
+                yield return backCell;
+            }
         }
     }
 }
