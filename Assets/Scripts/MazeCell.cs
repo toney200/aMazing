@@ -20,6 +20,12 @@ public class MazeCell : MonoBehaviour
     [SerializeField]
     private GameObject unvisitedBlock;
 
+    [SerializeField]
+    private Material pathMaterial;
+
+    [SerializeField]
+    private GameObject floorGraphics;
+
     public bool isVisited { get; private set; }
 
     /// <summary>
@@ -105,5 +111,10 @@ public class MazeCell : MonoBehaviour
     public void Remove()
     {
         Destroy(gameObject);
+    }
+
+    public void ChangeFloorToPath()
+    {
+        floorGraphics.GetComponent<Renderer>().material = pathMaterial;
     }
 }

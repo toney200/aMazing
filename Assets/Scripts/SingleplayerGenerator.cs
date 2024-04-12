@@ -64,6 +64,7 @@ public class SingleplayerGenerator : MonoBehaviour
 
     private int biggestValue;
     private int[] furthestCell;
+    private MazeCell finish;
 
     // Start is called before the first frame update
     void Awake()
@@ -103,7 +104,16 @@ public class SingleplayerGenerator : MonoBehaviour
         CopyWalls(toDestroy, goal);
         goal.transform.position = new Vector3(furthestCell[0], 0, furthestCell[1]);
         mazeGrid[furthestCell[0], furthestCell[1]] = goal;
+        finish = goal;
         toDestroy.Remove();
+    }
+
+    private void Update()
+    {
+        if (Input.GetKeyDown("space"))
+        {
+            FindPathToGoal(mazeGrid[Mathf.RoundToInt(gameObject.transform.position.x), Mathf.RoundToInt(gameObject.transform.position.z)], finish);
+        }
     }
 
     private void GenerateMaze(MazeCell previousCell, MazeCell currentCell)
@@ -518,7 +528,7 @@ public class SingleplayerGenerator : MonoBehaviour
         }
     }
 
-    public void FindPathToGoal(MazeCell cellStart)
+    public void FindPathToGoal(MazeCell cellStart, MazeCell goal)
     {
         var connectedCells = GetConnectedCells(cellStart);
         bool[,] visitedList = new bool[mazeWidth, mazeDepth];
@@ -568,15 +578,52 @@ public class SingleplayerGenerator : MonoBehaviour
                 {
                     found = true;
                     cellInfo[newX, newY].parentCell = currentCell;
+                    TracePath(cellInfo, goal);
+                    return;
                 }
 
                 if (!visitedList[newX, newY])
                 {
                     double gNew = cellInfo[x, z].g + 1.0;
-                    //double hNew = CalculateHValue(newX, newY, dest);
-                    //double fNew = gNew + hNew;
+                    double hNew = CalculateHValue(newX, newY, goal);
+                    double fNew = gNew + hNew;
+
+                    if (cellInfo[newX, newY].f == double.MaxValue || cellInfo[newX, newY].f > fNew)
+                    {
+                        openList.Add((fNew, new Vector2(newX, newY)));
+
+                        cellInfo[newX, newY].f = fNew;
+                        cellInfo[newX, newY].g = gNew;
+                        cellInfo[newX, newY].h = hNew;
+                        cellInfo[newX, newY].parentCell = currentCell;
+                    }
                 }
             }
+        }
+    }
+
+    private void TracePath(CellForPath[,] cellInfo, MazeCell goal)
+    {
+        int row = (int)goal.transform.position.x;
+        int depth = (int)goal.transform.position.z;
+
+        Stack<Vector2> path = new Stack<Vector2>();
+
+        while (!((int) cellInfo[row, depth].parentCell.transform.position.x == row && (int)cellInfo[row, depth].parentCell.transform.position.z == depth))
+        {
+            path.Push(new Vector2(row, depth));
+            int tempR = (int) cellInfo[row, depth].parentCell.transform.position.x;
+            int tempD = (int)cellInfo[row, depth].parentCell.transform.position.z;
+            row = tempR;
+            depth = tempD;
+        }
+
+        path.Push(new Vector2(row, depth));
+        while(path.Count > 0)
+        {
+            Vector2 p = path.Peek();
+            path.Pop();
+            mazeGrid[(int) p.x, (int) p.y].ChangeFloorToPath();
         }
     }
 
@@ -624,5 +671,11 @@ public class SingleplayerGenerator : MonoBehaviour
                 yield return backCell;
             }
         }
+    }
+
+    public static double CalculateHValue(int row, int col, MazeCell dest)
+    {
+        // Return using the distance formula
+        return Mathf.Sqrt(Mathf.Pow(row - dest.transform.position.x, 2) + Mathf.Pow(col - dest.transform.position.z, 2));
     }
 }

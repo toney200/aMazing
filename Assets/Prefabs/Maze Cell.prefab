@@ -632,7 +632,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!4 &578945047547979392
 Transform:
   m_ObjectHideFlags: 0
@@ -780,6 +780,8 @@ MonoBehaviour:
   frontWall: {fileID: 5986731250668953505}
   backWall: {fileID: 8091342709399886609}
   unvisitedBlock: {fileID: 8034068290844225334}
+  pathMaterial: {fileID: 2100000, guid: e3dfd69014578ed4cb2c002e7aad57f9, type: 2}
+  floorGraphics: {fileID: 246803263208997840}
 --- !u!1 &8391868107648592444
 GameObject:
   m_ObjectHideFlags: 0
