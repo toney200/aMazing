@@ -20,15 +20,32 @@ public class MazeCell : MonoBehaviour
     [SerializeField]
     private GameObject unvisitedBlock;
 
+    [SerializeField]
+    private GameObject collectablePrefab;
+
+    private GameObject collectableInstance;
+
     public bool isVisited { get; private set; }
 
     /// <summary>
     /// Disables the unvisited block to visually show a cell that has been visited
     /// </summary>
+    /// 
+
+    private void InstatiateCollectable(Vector3 position)
+    {
+        collectableInstance = Instantiate(collectablePrefab, position, Quaternion.identity);
+    }
+
     public void Visit()
     {
         isVisited = true;
         unvisitedBlock.SetActive(false);
+
+        if(collectablePrefab != null && collectableInstance == null) 
+        {
+            InstatiateCollectable(transform.position);  
+        }
     }
 
     public void ClearLeftWall()
@@ -81,4 +98,14 @@ public class MazeCell : MonoBehaviour
     {
         rightWall.tag = "Boundary";
     }
+<<<<<<< Updated upstream
 }
+=======
+
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
+
+}
+>>>>>>> Stashed changes

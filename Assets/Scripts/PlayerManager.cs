@@ -29,7 +29,11 @@ public class PlayerManager : MonoBehaviour
     private bool keepingPowerUp = false; //if player has power up and has not used it
     public int playerScore = 0; //the player's score
     public Vector3 startSpawn;
-   
+
+    //Score 
+    public TextMeshProUGUI bluePointText;
+    public int points = 0;
+
 
     // Power-Up variables
     private int powers = 5;             // represents the number of power-ups currently in the game
@@ -126,6 +130,8 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+
+        //bluePointText.text = points.ToString();
     }
 
     /*
@@ -409,4 +415,18 @@ public class PlayerManager : MonoBehaviour
         powerUpDuration = time;
         powerUpLengthText.text = powerUpDuration.ToString("0");
     }
+
+    private void OnCollisionEnter(Collision collision)
+    {
+        if (collision.gameObject.name.Contains("Collectable"))
+        {
+            points += 10;
+            Debug.Log("Collided with collectable.Current Score: " + points);
+            Destroy(collision.gameObject);
+            
+        }
+    }
+
+
+
 }

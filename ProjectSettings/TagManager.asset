@@ -8,6 +8,7 @@ TagManager:
   - Wall
   - Goal
   - Boundary
+  - Collectable
   layers:
   - Default
   - TransparentFX
