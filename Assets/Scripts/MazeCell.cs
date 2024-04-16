@@ -51,6 +51,26 @@ public class MazeCell : MonoBehaviour
         backWall.SetActive(false);
     }
 
+    public bool IsActiveLeftWall()
+    {
+        return leftWall.activeInHierarchy;
+    }
+
+    public bool IsActiveRightWall()
+    {
+        return rightWall.activeInHierarchy;
+    }
+
+    public bool IsActiveFrontWall()
+    {
+        return frontWall.activeInHierarchy;
+    }
+
+    public bool IsActiveBackWall()
+    {
+        return backWall.activeInHierarchy;
+    }
+
     public void ActivateWalls()
     {
         leftWall.SetActive(true);
@@ -80,5 +100,10 @@ public class MazeCell : MonoBehaviour
     public void BoundaryRight()
     {
         rightWall.tag = "Boundary";
+    }
+
+    public void Remove()
+    {
+        Destroy(gameObject);
     }
 }
