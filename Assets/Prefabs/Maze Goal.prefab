@@ -767,6 +767,8 @@ MonoBehaviour:
   frontWall: {fileID: 5986731250668953505}
   backWall: {fileID: 8091342709399886609}
   unvisitedBlock: {fileID: 8034068290844225334}
+  pathMaterial: {fileID: 2100000, guid: e3dfd69014578ed4cb2c002e7aad57f9, type: 2}
+  floorGraphics: {fileID: 246803263208997840}
 --- !u!65 &7611844560075860692
 BoxCollider:
   m_ObjectHideFlags: 0

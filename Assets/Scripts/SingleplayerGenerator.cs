@@ -102,17 +102,21 @@ public class SingleplayerGenerator : MonoBehaviour
         MazeCell goal = Instantiate(mazeGoalPrefab, new Vector3(furthestCell[0], 50, furthestCell[1]), Quaternion.identity, gameObject.transform);
         MazeCell toDestroy = mazeGrid[furthestCell[0], furthestCell[1]];
         CopyWalls(toDestroy, goal);
-        goal.transform.position = new Vector3(furthestCell[0], 0, furthestCell[1]);
+        goal.transform.position = new Vector3(Mathf.RoundToInt(furthestCell[0]), 0, Mathf.RoundToInt(furthestCell[1]));
         mazeGrid[furthestCell[0], furthestCell[1]] = goal;
         finish = goal;
+        if(goal.name == "Maze Goal(Clone)")
+        {
+            Debug.Log("Excpected");
+        }
         toDestroy.Remove();
     }
 
     private void Update()
     {
-        if (Input.GetKeyDown("space"))
+        if (Input.GetKeyDown("p"))
         {
-            FindPathToGoal(mazeGrid[Mathf.RoundToInt(gameObject.transform.position.x), Mathf.RoundToInt(gameObject.transform.position.z)], finish);
+            FindPathToGoal(mazeGrid[Mathf.RoundToInt(playersParent.transform.GetChild(0).gameObject.transform.position.x), Mathf.RoundToInt(playersParent.transform.GetChild(0).gameObject.transform.position.z)], finish);
         }
     }
 
@@ -530,6 +534,7 @@ public class SingleplayerGenerator : MonoBehaviour
 
     public void FindPathToGoal(MazeCell cellStart, MazeCell goal)
     {
+        Debug.Log("Entered Method");
         var connectedCells = GetConnectedCells(cellStart);
         bool[,] visitedList = new bool[mazeWidth, mazeDepth];
         CellForPath[,] cellInfo = new CellForPath[mazeWidth, mazeDepth];
@@ -552,8 +557,7 @@ public class SingleplayerGenerator : MonoBehaviour
         cellInfo[x, z].h = 0.0;
         cellInfo[x, z].parentCell = cellStart;
 
-        SortedSet<(double, Vector2)> openList = new SortedSet<(double,Vector2)>();
-        Comparer<(double, Vector2)>.Create((a, b) => a.Item1.CompareTo(b.Item1));
+        SortedSet<(double, Vector2)> openList = new SortedSet<(double,Vector2)>(Comparer<(double, Vector2)>.Create((a, b) => a.Item1.CompareTo(b.Item1)));
 
         openList.Add((0.0, new Vector2(cellStart.transform.position.x, cellStart.transform.position.z)));
 
@@ -574,7 +578,8 @@ public class SingleplayerGenerator : MonoBehaviour
             {
                 int newX = (int) cell.transform.position.x;
                 int newY = (int)cell.transform.position.z;
-                if (cell.tag == "Goal")
+                mazeGrid[newX, newY].ChangeFloorToPath();
+                if (newX == furthestCell[0] && newY == furthestCell[1])
                 {
                     found = true;
                     cellInfo[newX, newY].parentCell = currentCell;
@@ -604,6 +609,7 @@ public class SingleplayerGenerator : MonoBehaviour
 
     private void TracePath(CellForPath[,] cellInfo, MazeCell goal)
     {
+        Debug.Log("Tracing Path");
         int row = (int)goal.transform.position.x;
         int depth = (int)goal.transform.position.z;
 
@@ -636,6 +642,7 @@ public class SingleplayerGenerator : MonoBehaviour
         if (x + 1 < mazeWidth)
         {
             var rightCell = mazeGrid[x + 1, z];
+
             if (rightCell.IsActiveLeftWall() == false && currentCell.IsActiveRightWall() == false)
             {
                 yield return rightCell;
@@ -656,7 +663,7 @@ public class SingleplayerGenerator : MonoBehaviour
         if (z - 1 >= 0)
         {
             var frontCell = mazeGrid[x, z - 1];
-            if (frontCell.IsActiveBackWall() == false && currentCell.IsActiveFrontWall() == false)
+            if (frontCell.IsActiveFrontWall() == false && currentCell.IsActiveBackWall() == false)
             {
                 yield return frontCell;
             }
@@ -666,7 +673,7 @@ public class SingleplayerGenerator : MonoBehaviour
         if (z + 1 < mazeDepth)
         {
             var backCell = mazeGrid[x, z + 1];
-            if (backCell.IsActiveFrontWall() == false && currentCell.IsActiveBackWall() == false)
+            if (backCell.IsActiveBackWall() == false && currentCell.IsActiveFrontWall() == false)
             {
                 yield return backCell;
             }
