@@ -20,6 +20,7 @@ public class PlayerManager : MonoBehaviour
     public GameObject icon;
     private UnityEngine.UI.Image pwImage;
     private GameObject[] otherPlayers;
+    public GameObject collectable;
 
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
@@ -30,7 +31,7 @@ public class PlayerManager : MonoBehaviour
     public int playerScore = 0; //the player's score
     public Vector3 startSpawn;
 
-    //Score 
+    //Score for singleplayer
     public TextMeshProUGUI bluePointText;
     public int points = 0;
 
@@ -416,16 +417,13 @@ public class PlayerManager : MonoBehaviour
         powerUpLengthText.text = powerUpDuration.ToString("0");
     }
 
-    private void OnCollisionEnter(Collision collision)
+    public void Points()
     {
-        if (collision.gameObject.name.Contains("Collectable"))
-        {
-            points += 10;
-            Debug.Log("Collided with collectable.Current Score: " + points);
-            Destroy(collision.gameObject);
-            
-        }
+
+        points += 10;
+        bluePointText.text = points.ToString();
     }
+    
 
 
 

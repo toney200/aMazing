@@ -4,12 +4,10 @@ using UnityEngine;
 
 public class Collectible : MonoBehaviour
 {
-    
-    GMR gmr;
-
+   
     private void Start()
     {
-     
+      
         
     }
 
@@ -18,7 +16,29 @@ public class Collectible : MonoBehaviour
         
     }
 
-   
-    
+    private void OnTriggerEnter(Collider other)
+    {
+        if (other.CompareTag("Player"))
+        {
+            GameObject gmrGameObject = GameObject.FindGameObjectWithTag("GMR");
+
+            if(gmrGameObject != null)
+            {
+                GMR gmr = gmrGameObject.GetComponent<GMR>();
+
+                if(gmr != null)
+                {
+                    gmr.Points();
+                }
+            }
+
+            
+
+        }
+        Destroy(gameObject);
+    }
+
+
+
 
 }

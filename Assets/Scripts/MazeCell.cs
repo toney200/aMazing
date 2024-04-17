@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeCell : MonoBehaviour
@@ -44,7 +41,7 @@ public class MazeCell : MonoBehaviour
 
         if(collectablePrefab != null && collectableInstance == null) 
         {
-            InstatiateCollectable(transform.position);  
+            InstatiateCollectable(new Vector3(transform.position.x, 0.35f, transform.position.z));  
         }
     }
 
@@ -66,6 +63,25 @@ public class MazeCell : MonoBehaviour
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+    }
+    public bool IsActiveLeftWall()
+    {
+        return leftWall.activeInHierarchy;
+    }
+
+    public bool IsActiveRightWall()
+    {
+        return rightWall.activeInHierarchy;
+    }
+
+    public bool IsActiveFrontWall()
+    {
+        return frontWall.activeInHierarchy;
+    }
+
+    public bool IsActiveBackWall()
+    {
+        return backWall.activeInHierarchy;
     }
 
     public void ActivateWalls()
@@ -98,14 +114,14 @@ public class MazeCell : MonoBehaviour
     {
         rightWall.tag = "Boundary";
     }
-<<<<<<< Updated upstream
-}
-=======
-
     public void Remove()
     {
         Destroy(gameObject);
     }
-
 }
->>>>>>> Stashed changes
+
+
+   
+
+
+
