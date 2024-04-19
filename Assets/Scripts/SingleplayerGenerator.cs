@@ -105,10 +105,6 @@ public class SingleplayerGenerator : MonoBehaviour
         goal.transform.position = new Vector3(Mathf.RoundToInt(furthestCell[0]), 0, Mathf.RoundToInt(furthestCell[1]));
         mazeGrid[furthestCell[0], furthestCell[1]] = goal;
         finish = goal;
-        if(goal.name == "Maze Goal(Clone)")
-        {
-            Debug.Log("Excpected");
-        }
         toDestroy.Remove();
     }
 
@@ -534,7 +530,6 @@ public class SingleplayerGenerator : MonoBehaviour
 
     public void FindPathToGoal(MazeCell cellStart, MazeCell goal)
     {
-        Debug.Log("Entered Method");
         var connectedCells = GetConnectedCells(cellStart);
         bool[,] visitedList = new bool[mazeWidth, mazeDepth];
         CellForPath[,] cellInfo = new CellForPath[mazeWidth, mazeDepth];
@@ -561,8 +556,6 @@ public class SingleplayerGenerator : MonoBehaviour
 
         openList.Add((0.0, new Vector2(cellStart.transform.position.x, cellStart.transform.position.z)));
 
-        bool found = false;
-
         while (openList.Count > 0)
         {
             (double f, Vector2 v) p = openList.Min;
@@ -581,7 +574,6 @@ public class SingleplayerGenerator : MonoBehaviour
                 mazeGrid[newX, newY].ChangeFloorToPath();
                 if (newX == furthestCell[0] && newY == furthestCell[1])
                 {
-                    found = true;
                     cellInfo[newX, newY].parentCell = currentCell;
                     TracePath(cellInfo, goal);
                     return;
