@@ -12,26 +12,35 @@ public class GMR : MonoBehaviour
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI timeText;
     public int points;
+    public int highScore;
     public float time = 120;
     public float timeleft;
+
     private void Start()
     {
-       
+        points = PlayerPrefs.GetInt("Points", 0);
+        UpdatePointsText(); 
     }
 
     private void Update()
     {
+        if(Input.GetKey(KeyCode.Escape))
+        {
+            PlayerPrefs.Save();
+            SceneManager.LoadScene("Game Over");
+        }
         Timer();
     }
     public void Points()
     {
+        
         points += 10;
-        pointsText.text ="Points: " + points.ToString("0");
-    }
-    IEnumerator RoundTimer(float timer)
-    {
-        yield return new WaitForSeconds(timer);
-        SceneManager.LoadScene("Game Over");
+        UpdatePointsText();
+
+        PlayerPrefs.SetInt("Points", points);
+        PlayerPrefs.Save();
+        
+        
     }
 
     void Timer()
@@ -43,9 +52,19 @@ public class GMR : MonoBehaviour
         }
         else
         {
-            //SceneManager.LoadScene("Game Over");
+            SceneManager.LoadScene("Game Over");
         }
         
+
     }
+
+    void UpdatePointsText()
+    {
+        pointsText.text = "Points: " + points.ToString("0");
+    }
+
+    
+
+
 
 }

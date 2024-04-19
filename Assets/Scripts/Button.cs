@@ -7,6 +7,7 @@ using UnityEngine.SceneManagement;
 public class Button : MonoBehaviour
 {
     MusicMainMenu music;
+    GMR gmr;
     // Start is called before the first frame update
     void Start()
     {
@@ -49,5 +50,13 @@ public class Button : MonoBehaviour
     public void OnClick()
     {
        Application.Quit();  
+    }
+
+    public void Restart()
+    {
+        
+        PlayerPrefs.DeleteKey("Points");
+        SceneManager.LoadScene("Singleplayer");
+        
     }
 }

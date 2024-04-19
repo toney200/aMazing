@@ -163,11 +163,13 @@ public class PlayerManager : MonoBehaviour
                     case 1:
                         speedBoosting = true;
                         StartCoroutine(SpeedBoosting());
+                      
                         break;
 
                     case 2:
                         isGhosting = true;
                         StartCoroutine(Ghosting());
+
                         break;
 
                     case 3:
@@ -284,6 +286,8 @@ public class PlayerManager : MonoBehaviour
         usingPowerUp = false;
         keepingPowerUp = false;
         icon.SetActive(false);
+
+       
     }
 
     private void OutOfBounds()
