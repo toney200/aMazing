@@ -59,4 +59,9 @@ public class Button : MonoBehaviour
         SceneManager.LoadScene("Singleplayer");
         
     }
+
+    public void Singleplayer()
+    {
+        SceneManager.LoadScene("Singleplayer");
+    }
 }

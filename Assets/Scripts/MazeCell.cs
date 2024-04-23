@@ -22,6 +22,8 @@ public class MazeCell : MonoBehaviour
 
     private GameObject collectableInstance;
 
+    
+
     public bool isVisited { get; private set; }
 
     /// <summary>
@@ -39,7 +41,7 @@ public class MazeCell : MonoBehaviour
         isVisited = true;
         unvisitedBlock.SetActive(false);
 
-        if(collectablePrefab != null && collectableInstance == null) 
+        if(collectablePrefab != null && collectableInstance == null)  
         {
             InstatiateCollectable(new Vector3(transform.position.x, 0.35f, transform.position.z));  
         }

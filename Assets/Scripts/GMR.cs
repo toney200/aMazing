@@ -9,10 +9,10 @@ using UnityEngine.SceneManagement;
 
 public class GMR : MonoBehaviour
 {
+    
     public TextMeshProUGUI pointsText;
     public TextMeshProUGUI timeText;
     public int points;
-    public int highScore;
     public float time = 120;
     public float timeleft;
 

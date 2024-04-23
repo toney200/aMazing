@@ -21,6 +21,7 @@ public class PlayerManager : MonoBehaviour
     private UnityEngine.UI.Image pwImage;
     private GameObject[] otherPlayers;
     public GameObject collectable;
+   
 
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
@@ -78,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
         name = gameObject.name;
         otherPlayers = GameObject.FindGameObjectsWithTag("Player");
+        
 
         if (gameObject.name.Contains("Blue Player"))
         {
@@ -199,7 +201,7 @@ public class PlayerManager : MonoBehaviour
      */
     private int EnablePowerUp(){
 
-        int[] powersDistribution = { 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5 };
+        int[] powersDistribution = { 1,1,1,1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5 };
         int localPowerSelect = UnityEngine.Random.Range(0, powersDistribution.Length);
         powerSelect = powersDistribution[localPowerSelect];
 
@@ -427,7 +429,9 @@ public class PlayerManager : MonoBehaviour
         points += 10;
         bluePointText.text = points.ToString();
     }
-    
+
+  
+
 
 
 

@@ -21,6 +21,7 @@ public class MazeGoal : MonoBehaviour
                 whoWon = 3;
             }
             gameObject.transform.parent.GetComponent<MazeGeneratorInstant>().NewRound(whoWon);
+
         }
     }
 }

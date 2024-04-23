@@ -782,8 +782,7 @@ MonoBehaviour:
   pointsText: {fileID: 1283505372}
   timeText: {fileID: 1411114338}
   points: 0
-  highScore: 0
-  time: 10
+  time: 120
   timeleft: 0
 --- !u!4 &1209216849
 Transform:
