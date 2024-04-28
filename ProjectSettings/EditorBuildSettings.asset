@@ -14,5 +14,11 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/PowerUps Page.unity
     guid: 9eb32d6c5b6bb004ab3a2a69ea0cd9ad
+  - enabled: 1
+    path: Assets/Scenes/Victory.unity
+    guid: 74e6884419529df4da1fbd6350018db9
+  - enabled: 1
+    path: Assets/Scenes/Singleplayer.unity
+    guid: 93172591ec6c04047a6dcfe3f5fff89a
   m_configObjects:
     com.unity.input.settings: {fileID: 11400000, guid: e6e325ec499046e47b431cf21deb940c, type: 2}

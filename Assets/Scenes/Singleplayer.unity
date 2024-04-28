@@ -335,7 +335,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 0}
   m_audioClip: {fileID: 8300000, guid: 02f10337e87cfa0489beecba6e74e07a, type: 3}
   m_PlayOnAwake: 1
-  m_Volume: 0.078
+  m_Volume: 0.113
   m_Pitch: 1
   Loop: 1
   Mute: 0
@@ -502,10 +502,9 @@ MonoBehaviour:
   playerPrefabList:
   - {fileID: 6999135907862676453, guid: 006621621407e2d43931d0102839bdc2, type: 3}
   blueScoreText: {fileID: 1254110634}
-  greenScoreText: {fileID: 2046054367}
-  yellowScoreText: {fileID: 0}
-  music: {fileID: 1969077941}
+  music: {fileID: 831409847}
   goalSFX: {fileID: 1421174508}
+  collectible: {fileID: 6345161031831749321, guid: 4053d627b4739dd48bdae9ca4080d3c8, type: 3}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -883,7 +882,7 @@ MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 4209482485086319825, guid: 9c6f45bb84ec7474db109356008c3253, type: 3}
   m_PrefabInstance: {fileID: 1969077940}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1969077941}
+  m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: f4688fdb7df04437aeb418b961361dc5, type: 3}
@@ -1066,11 +1065,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9c6f45bb84ec7474db109356008c3253, type: 3}
---- !u!1 &1969077941 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 3226333609276307511, guid: 9c6f45bb84ec7474db109356008c3253, type: 3}
-  m_PrefabInstance: {fileID: 1969077940}
-  m_PrefabAsset: {fileID: 0}
 --- !u!114 &2046054367 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7590054850165328622, guid: 9c6f45bb84ec7474db109356008c3253, type: 3}

@@ -26,6 +26,12 @@ public class MazeCell : MonoBehaviour
     [SerializeField]
     private GameObject floorGraphics;
 
+    [SerializeField]
+    private PhysicMaterial icePhMaterial;
+
+    [SerializeField]
+    private Material iceTexture;
+
     public bool isVisited { get; private set; }
 
     /// <summary>
@@ -116,5 +122,11 @@ public class MazeCell : MonoBehaviour
     public void ChangeFloorToPath()
     {
         floorGraphics.GetComponent<Renderer>().material = pathMaterial;
+    }
+
+    public void IceFloor()
+    {
+        floorGraphics.GetComponent<Renderer>().material = iceTexture;
+        floorGraphics.transform.parent.gameObject.GetComponent<BoxCollider>().material = icePhMaterial;
     }
 }

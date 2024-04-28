@@ -61,6 +61,7 @@ public class SingleplayerGenerator : MonoBehaviour
 
     public GameObject music;
     public AudioSource goalSFX;
+    public GameObject collectible;
 
     private int biggestValue;
     private int[] furthestCell;
@@ -94,6 +95,15 @@ public class SingleplayerGenerator : MonoBehaviour
             {
                 mazeGrid[i, j] = Instantiate(mazeCellPrefab, new Vector3(i, 0, j), Quaternion.identity);
                 cellValue[i, j] = 0;
+                int random = Random.Range(0, 101);
+                if(random % 7 == 0)
+                {
+                    mazeGrid[i, j].IceFloor();
+                }
+                if(random % 5 == 0)
+                {
+                    Instantiate(collectible, new Vector3(i, 0.35f, j), Quaternion.identity, gameObject.transform);
+                }
             }
         }
         StartAtRandomEdgeCell(true);
@@ -417,7 +427,7 @@ public class SingleplayerGenerator : MonoBehaviour
         switch (winner)
         {
             case 1:
-                blueScore++;
+                blueScore += 10;
                 blueScoreText.text = blueScore.ToString();
                 PlayerPrefs.SetInt("Blue Score", blueScore);
                 break;
@@ -425,7 +435,7 @@ public class SingleplayerGenerator : MonoBehaviour
                 break;
         }
 
-        if (blueScore == 5)
+        if (blueScore >= 100)
         {
             first = true;
             SceneManager.LoadScene("Victory");
@@ -446,6 +456,13 @@ public class SingleplayerGenerator : MonoBehaviour
                 }
 
                 StartAtRandomEdgeCell(false);*/
+    }
+
+    public void IncreaseScore()
+    {
+        blueScore++;
+        blueScoreText.text = blueScore.ToString();
+        PlayerPrefs.SetInt("Blue Score", blueScore);
     }
 
     /// <summary>

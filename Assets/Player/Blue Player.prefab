@@ -1665,6 +1665,7 @@ GameObject:
   - component: {fileID: 5736532424305490701}
   - component: {fileID: -8006295221436491931}
   - component: {fileID: 440356566404681331}
+  - component: {fileID: -3596722849702894}
   m_Layer: 0
   m_Name: Blue Player
   m_TagString: Player
@@ -1903,6 +1904,25 @@ MonoBehaviour:
   isGhosting: 0
   speedBoosting: 0
   isInvisible: 0
+--- !u!114 &-3596722849702894
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6999135907862676453}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f5f4e15628c0e5345b7ec0bd882370c9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  isActive: 0
+  refreshRateMesh: 0.07
+  positionToSpawn: {fileID: 842968953231099973}
+  mat: {fileID: 2100000, guid: 8cdc7e72debbd874d9ed20c76660ab13, type: 2}
+  shaderVarRef: _Alpha
+  shaderVarRate: 0.1
+  shaderVarRefreshRate: 0.05
 --- !u!1 &7204009026325358369
 GameObject:
   m_ObjectHideFlags: 0

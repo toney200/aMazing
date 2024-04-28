@@ -222,6 +222,7 @@ public class PlayerManager : MonoBehaviour
         {
             Debug.Log("Pressed blue speed");
             playerMovement.speed *= 2;
+            StartCoroutine(gameObject.GetComponent<MeshTrail>().ActivateTrail(speedBoostDuration));
             yield return new WaitForSeconds(speedBoostDuration);
             playerMovement.speed /= 2;
 
