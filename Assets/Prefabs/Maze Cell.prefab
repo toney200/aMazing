@@ -780,6 +780,7 @@ MonoBehaviour:
   frontWall: {fileID: 5986731250668953505}
   backWall: {fileID: 8091342709399886609}
   unvisitedBlock: {fileID: 8034068290844225334}
+  collectablePrefab: {fileID: 4926430393309804381, guid: c275010e75724f74cb8e13dbcbb7f918, type: 3}
 --- !u!1 &8391868107648592444
 GameObject:
   m_ObjectHideFlags: 0

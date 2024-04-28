@@ -1770,7 +1770,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: af5ea78d8a598e54a8cc6c6f36fe60be, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  speed: 1.1
+  speed: 3
 --- !u!136 &5736532424305490701
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -1885,11 +1885,14 @@ MonoBehaviour:
   - {fileID: 21300000, guid: 2efda778921981243a9a54528e45c24b, type: 3}
   - {fileID: 21300000, guid: ebe8e2ce0e1f99c4e89b76dce25a2621, type: 3}
   icon: {fileID: 3147506198038882634}
+  collectable: {fileID: 0}
   bodyMeshRenderer: {fileID: 4741934166163917621}
   playerCollider: {fileID: 5736532424305490701}
   counter: 5
   playerScore: 0
   startSpawn: {x: 0, y: 0, z: 0}
+  bluePointText: {fileID: 0}
+  points: 0
   hasPowerUp: 0
   powerSelect: 0
   powerUpTimer: 5

@@ -20,6 +20,8 @@ public class PlayerManager : MonoBehaviour
     public GameObject icon;
     private UnityEngine.UI.Image pwImage;
     private GameObject[] otherPlayers;
+    public GameObject collectable;
+   
 
     [SerializeField] private SkinnedMeshRenderer bodyMeshRenderer;
     [SerializeField] private Collider playerCollider;
@@ -29,7 +31,11 @@ public class PlayerManager : MonoBehaviour
     private bool keepingPowerUp = false; //if player has power up and has not used it
     public int playerScore = 0; //the player's score
     public Vector3 startSpawn;
-   
+
+    //Score for singleplayer
+    public TextMeshProUGUI bluePointText;
+    public int points = 0;
+
 
     // Power-Up variables
     private int powers = 5;             // represents the number of power-ups currently in the game
@@ -73,6 +79,7 @@ public class PlayerManager : MonoBehaviour
         pwImage = icon.GetComponent<UnityEngine.UI.Image>();
         name = gameObject.name;
         otherPlayers = GameObject.FindGameObjectsWithTag("Player");
+        
 
         if (gameObject.name.Contains("Blue Player"))
         {
@@ -126,6 +133,8 @@ public class PlayerManager : MonoBehaviour
                 }
             }
         }
+
+        //bluePointText.text = points.ToString();
     }
 
     /*
@@ -156,11 +165,13 @@ public class PlayerManager : MonoBehaviour
                     case 1:
                         speedBoosting = true;
                         StartCoroutine(SpeedBoosting());
+                      
                         break;
 
                     case 2:
                         isGhosting = true;
                         StartCoroutine(Ghosting());
+
                         break;
 
                     case 3:
@@ -190,7 +201,7 @@ public class PlayerManager : MonoBehaviour
      */
     private int EnablePowerUp(){
 
-        int[] powersDistribution = { 1, 1, 1, 1, 2, 2, 2, 3, 3, 4, 4, 4, 5 };
+        int[] powersDistribution = { 1,1,1,1, 2, 2, 2, 3, 3, 3, 4, 4, 4, 5, 5 };
         int localPowerSelect = UnityEngine.Random.Range(0, powersDistribution.Length);
         powerSelect = powersDistribution[localPowerSelect];
 
@@ -277,6 +288,8 @@ public class PlayerManager : MonoBehaviour
         usingPowerUp = false;
         keepingPowerUp = false;
         icon.SetActive(false);
+
+       
     }
 
     private void OutOfBounds()
@@ -409,4 +422,17 @@ public class PlayerManager : MonoBehaviour
         powerUpDuration = time;
         powerUpLengthText.text = powerUpDuration.ToString("0");
     }
+
+    public void Points()
+    {
+
+        points += 10;
+        bluePointText.text = points.ToString();
+    }
+
+  
+
+
+
+
 }
