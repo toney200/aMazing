@@ -1,6 +1,3 @@
-using System;
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class MazeCell : MonoBehaviour
@@ -20,15 +17,34 @@ public class MazeCell : MonoBehaviour
     [SerializeField]
     private GameObject unvisitedBlock;
 
+    [SerializeField]
+    private GameObject collectablePrefab;
+
+    private GameObject collectableInstance;
+
+    
+
     public bool isVisited { get; private set; }
 
     /// <summary>
     /// Disables the unvisited block to visually show a cell that has been visited
     /// </summary>
+    /// 
+
+    private void InstatiateCollectable(Vector3 position)
+    {
+        collectableInstance = Instantiate(collectablePrefab, position, Quaternion.identity);
+    }
+
     public void Visit()
     {
         isVisited = true;
         unvisitedBlock.SetActive(false);
+
+        if(collectablePrefab != null && collectableInstance == null)  
+        {
+            InstatiateCollectable(new Vector3(transform.position.x, 0.35f, transform.position.z));  
+        }
     }
 
     public void ClearLeftWall()
@@ -49,6 +65,25 @@ public class MazeCell : MonoBehaviour
     public void ClearBackWall()
     {
         backWall.SetActive(false);
+    }
+    public bool IsActiveLeftWall()
+    {
+        return leftWall.activeInHierarchy;
+    }
+
+    public bool IsActiveRightWall()
+    {
+        return rightWall.activeInHierarchy;
+    }
+
+    public bool IsActiveFrontWall()
+    {
+        return frontWall.activeInHierarchy;
+    }
+
+    public bool IsActiveBackWall()
+    {
+        return backWall.activeInHierarchy;
     }
 
     public void ActivateWalls()
@@ -81,4 +116,14 @@ public class MazeCell : MonoBehaviour
     {
         rightWall.tag = "Boundary";
     }
+    public void Remove()
+    {
+        Destroy(gameObject);
+    }
 }
+
+
+   
+
+
+

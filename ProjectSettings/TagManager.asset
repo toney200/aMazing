@@ -8,6 +8,8 @@ TagManager:
   - Wall
   - Goal
   - Boundary
+  - Collectable
+  - GMR
   layers:
   - Default
   - TransparentFX
